@@ -3,7 +3,7 @@
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Dashboard') }}
         </h2>
-        
+
     </x-slot>
 
     <div class="py-12">
@@ -11,8 +11,7 @@
 
             <div class="grid grid-cols-2 grid-flow-row gap-2 w-full">
                 <x-card label="Total Attendees" :total="$totalAttendees" sub_label="Attendances" />
-                <x-card label="Total Employees" :total="$totalEmployees" 
-                sub_label="Employees" />
+                <x-card label="Total Employees" :total="$totalEmployees" sub_label="Employees" />
             </div>
 
 
@@ -37,14 +36,15 @@
                             @forelse ($employeeAttendances as $employeeAttendance)
                                 <tr>
                                     <th></th>
-                                    <td>{{$employeeAttendance->name}}</td>
-                                    <td>{{$employeeAttendance->ticket_number}}</td>
-                                    <td>{{date('F d, Y h:s A',  strtotime($employeeAttendance->attendance->arrival_date))}}</td>
+                                    <td>{{ $employeeAttendance->name }}</td>
+                                    <td>{{ $employeeAttendance->ticket_number }}</td>
+                                    <td>{{ date('F d, Y h:s A', strtotime($employeeAttendance->attendance->arrival_date)) }}
+                                    </td>
                                 </tr>
 
                             @empty
                                 <tr>
-                                    No Attendance
+                                    <td> No Attendance</td>
                                 </tr>
                             @endforelse
 

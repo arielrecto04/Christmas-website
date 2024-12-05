@@ -14,7 +14,10 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
 
 
-    $employeeAttendances = Employee::whereHas('attendance')->latest()->paginate(10);
+    $employeeAttendances = Employee::join('attendances', 'employees.id', '=', 'attendances.employee_id')
+        ->orderBy('attendances.arrival_date', 'asc') 
+        ->select('employees.*') 
+        ->paginate(10);
 
     $totalAttendees = Attendance::count();
 
@@ -24,7 +27,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
-Route::prefix('attendance')->as('attendance.')->group(function(){
+Route::prefix('attendance')->as('attendance.')->group(function () {
     Route::get('', [AttendanceController::class, 'index'])->name('index');
     Route::post('', [AttendanceController::class, 'store'])->name('store');
     Route::get('{employee}/congrats', [AttendanceController::class, 'congrats'])->name('congrats');
@@ -35,7 +38,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('print-ticket', function(){
+    Route::get('print-ticket', function () {
         $employeesTicket = Employee::get();
 
         return view('ticket', compact('employeesTicket'));
@@ -44,4 +47,4 @@ Route::middleware('auth')->group(function () {
     Route::resource('employees', EmployeeController::class);
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
