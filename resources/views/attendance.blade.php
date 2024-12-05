@@ -1,6 +1,6 @@
 <x-landing>
     <form action="{{ route('attendance.store') }}" method="POST"
-        class="flex flex-col gap-2 bg-white shadow-lg p-5 rounded-lg w-2/5 z-20" x-data="timeIn">
+        class="flex flex-col gap-2 bg-white shadow-lg p-5 rounded-lg w-full md:w-1/2 lg:w-2/5 z-20" x-data="timeIn">
 
         @csrf
 

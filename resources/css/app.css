@@ -2,9 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Eagle+Lake&display=swap');
-
-@import "./clock.css";
 
 .ml1 {
     font-weight: 900;
