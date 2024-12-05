@@ -1,5 +1,6 @@
 <x-landing>
-    <form action="{{route('attendance.store')}}" method="POST" class="flex flex-col gap-2 bg-white shadow-lg p-5 rounded-lg w-2/5 z-20" x-data="timeIn">
+    <form action="{{ route('attendance.store') }}" method="POST"
+        class="flex flex-col gap-2 bg-white shadow-lg p-5 rounded-lg w-2/5 z-20" x-data="timeIn">
 
         @csrf
 
@@ -18,12 +19,22 @@
             <label for="" class="text-gray-400">Arrival Time</label> --}}
         <input x-ref="timeContainer" type="hidden" name="arrival_date" class="input border-red-500">
         {{-- </div> --}}
-        
+
 
         <input type="hidden" name="selected_employee" x-model="JSON.stringify(selectedEmployee)">
         <label class="form-control w-full">
+
+            @if(Session::has('error'))
+                <p class="text-xs text-error">
+                    {{Session::get('error')}}
+                </p>
+            @endif
+            <p x-text="error?.hasAttendance" class="text-xs text-error">
+
+            </p>
             <div x-show="selectedEmployee">
-                <div class="flex p-5 rounded-lg shadow-lg justify-between items-center hover:scale-105 hover:shadow-red-500 duration-700">
+                <div
+                    class="flex p-5 rounded-lg shadow-lg justify-between items-center hover:scale-105 hover:shadow-red-500 duration-700">
                     <h1 x-text="selectedEmployee?.name" class="text-lg font-bold"></h1>
 
                     <button type="button" @click="selectedEmployee = null" class="btn btn-error btn-xs">
@@ -84,8 +95,14 @@
             <input type="text" class="input border-red-500" disabled placeholder="ex: Ariel Recto">
         </div> --}}
 
+        <template x-if="selectedEmployee?.attendance == null">
+            <button class="btn btn-error">Submit</button>
+        </template>
 
-        <button class="btn btn-error">Submit</button>
+        <template x-if="selectedEmployee?.attendance != null">
+            <button class="btn btn-error" disabled>Submit</button>
+        </template>
+
 
     </form>
 
@@ -98,6 +115,9 @@
                 results: [],
                 isOpen: false,
                 selectedEmployee: null,
+                error : {
+
+                },
                 init() {
                     const timeInEl = this.$refs.timeContainer;
 
@@ -118,6 +138,14 @@
                         })];
                         console.log(this.results)
                     })
+
+                    this.$watch('selectedEmployee', () => {
+                        if(this.selectedEmployee.attendance != null){
+                            this.error = {
+                                hasAttendance : 'You have attendance already'
+                            }
+                        }
+                    });
                 },
                 laodEmployees(data) {
                     console.log(data);
@@ -127,7 +155,9 @@
                     this.isOpen = !this.isOpen;
                 },
                 pickEmployee(data) {
-                    this.selectedEmployee = {...data};
+                    this.selectedEmployee = {
+                        ...data
+                    };
 
                     console.log(this.selectedEmployee);
 

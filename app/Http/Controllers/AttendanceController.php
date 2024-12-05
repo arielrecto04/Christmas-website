@@ -16,7 +16,7 @@ class AttendanceController extends Controller
     public function index()
     {
 
-        $employees = Employee::get();
+        $employees = Employee::with(['attendance'])->get();
 
 
         return view('attendance', compact('employees'));
@@ -38,6 +38,13 @@ class AttendanceController extends Controller
 
         $employee = json_decode($request->selected_employee);
 
+
+        if($employee->attendance){
+
+            return back()->with(['error' => 'You have attendance already']);
+        }
+
+    
 
         $cleanedDateString = preg_replace('/\(.*?\)/', '', $request->arrival_date);
 
@@ -80,7 +87,12 @@ class AttendanceController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $attendance = Attendance::find($id);
+
+        $attendance->delete();
+
+
+        return back()->with(['message' => 'Attendance Deleted']);
     }
 
     public function congrats(string $name)
