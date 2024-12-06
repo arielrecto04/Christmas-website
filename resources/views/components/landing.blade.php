@@ -84,7 +84,7 @@
         <div class="min-h-screen  bg-cover bg-fixed" style="background-image: url({{ asset('images/bg4.jpg') }})">
 
 
-            <div class="flex flex-col lg:flex-row items-center justify-start md:justify-center min-h-screen relative w-full">
+            <div class="flex flex-col lg:flex-row items-center justify-start md:justify-center h-[40rem] md:min-h-screen relative w-full">
 
                 <img src="{{ asset('images/b2.png') }}" alt="" srcset=""
                     class="absolute z-10 top-0 -left-[14rem] rotate-[100deg] w-[40rem] opacity-80">
