@@ -1,8 +1,13 @@
 <x-landing>
     <form action="{{ route('attendance.store') }}" method="POST"
-        class="flex flex-col gap-2 bg-white shadow-lg p-5 rounded-lg w-full md:w-1/2 lg:w-2/5 z-20" x-data="timeIn">
+        class="flex flex-col gap-2 bg-white shadow-lg p-5 rounded-lg w-full md:w-1/2 lg:w-2/5 z-20"
+        x-data="timeIn">
 
         @csrf
+
+        <h1 class="text-4xl text-center py-4 font-bold text-red-500 tracking-wider uppercase bg-gray-50 border-y border-red-500">
+            Attendance
+        </h1>
 
         <div class="flex item-center justify-center">
             <div class="w-[20rem] aspect-square z-10">
@@ -12,9 +17,7 @@
 
 
 
-        <h1 class="text-2xl font-bold text-red-500 tracking-wider">
-            Attendance
-        </h1>
+
         {{-- <div class="flex flex-col gap-2">
             <label for="" class="text-gray-400">Arrival Time</label> --}}
         <input x-ref="timeContainer" type="hidden" name="arrival_date" class="input border-red-500">
@@ -24,9 +27,9 @@
         <input type="hidden" name="selected_employee" x-model="JSON.stringify(selectedEmployee)">
         <label class="form-control w-full">
 
-            @if(Session::has('error'))
+            @if (Session::has('error'))
                 <p class="text-xs text-error">
-                    {{Session::get('error')}}
+                    {{ Session::get('error') }}
                 </p>
             @endif
             <p x-text="error?.hasAttendance" class="text-xs text-error">
@@ -50,8 +53,8 @@
                      rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-blue-500">
 
 
-                    <span class="mr-2 text-red-500" x-show="!isOpen">Open Dropdown</span>
-                    <span class="mr-2 text-red-500" x-show="isOpen">Close Dropdown</span>
+                    <span class="mr-2 text-red-500 text-2xl" x-show="!isOpen">Open Dropdown</span>
+                    <span class="mr-2 text-red-500 text-2xl" x-show="isOpen">Close Dropdown</span>
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 ml-2 -mr-1" viewBox="0 0 20 20"
                         fill="currentColor" aria-hidden="true">
                         <path fill-rule="evenodd"
@@ -96,7 +99,7 @@
         </div> --}}
 
         <template x-if="selectedEmployee?.attendance == null">
-            <button class="btn btn-error">Submit</button>
+            <button class="btn btn-error text-white text-lg">Submit</button>
         </template>
 
         <template x-if="selectedEmployee?.attendance != null">
@@ -115,7 +118,7 @@
                 results: [],
                 isOpen: false,
                 selectedEmployee: null,
-                error : {
+                error: {
 
                 },
                 init() {
@@ -136,19 +139,19 @@
                                 return item;
                             }
                         })];
-                      
+
                     })
 
                     this.$watch('selectedEmployee', () => {
-                        if(this.selectedEmployee.attendance != null){
+                        if (this.selectedEmployee.attendance != null) {
                             this.error = {
-                                hasAttendance : 'You have attendance already'
+                                hasAttendance: 'You have attendance already'
                             }
                         }
                     });
                 },
                 laodEmployees(data) {
-                  
+
                     this.employees = [...data];
                 },
                 toggleDropdown() {
@@ -159,7 +162,7 @@
                         ...data
                     };
 
-                    
+
 
                     // this.search = null;
 
