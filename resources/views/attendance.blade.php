@@ -46,7 +46,7 @@
 
             </div>
 
-            <div class="grid grid-cols-2 grid-flow-row gap-2 w-full p-5">
+            <div class="grid grid-cols-2 grid-flow-row items-center gap-2 w-full p-5">
                 <div class="relative group" x-show="!selectedEmployee">
                     <button @click="toggleDropdown" type="button"
                         class="inline-flex justify-center w-full
@@ -55,8 +55,10 @@
                           focus:ring-offset-gray-100 focus:ring-blue-500">
 
 
-                        <span class="mr-2 text-red-500 text-xl" x-show="!isOpen">Open Dropdown</span>
-                        <span class="mr-2 text-red-500 text-xl" x-show="isOpen">Close Dropdown</span>
+                        <span class="mr-2 text-red-500 text-sm md:text-base lg:text-xl" x-show="!isOpen">Open
+                            Dropdown</span>
+                        <span class="mr-2 text-red-500 text-sm md:text-base lg:text-xl" x-show="isOpen">Close
+                            Dropdown</span>
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 ml-2 -mr-1" viewBox="0 0 20 20"
                             fill="currentColor" aria-hidden="true">
                             <path fill-rule="evenodd"
@@ -65,7 +67,7 @@
                         </svg>
                     </button>
                     <div x-show="isOpen" x-init=" laodEmployees({{ json_encode($employees) }})"
-                        class="absolute right-0 mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5
+                        class="absolute rigth-0 mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5
                         w-full p-1 space-y-1 overflow-y-auto max-h-44">
                         <!-- Search input -->
                         <input id="search-input"
@@ -95,11 +97,11 @@
                     </div>
                 </div>
                 <template x-if="selectedEmployee?.attendance == null">
-                    <button class="btn btn-error text-white text-lg text-xl">Submit</button>
+                    <button class="btn btn-error  text-white text-sm lg:text-xl">Submit</button>
                 </template>
 
                 <template x-if="selectedEmployee?.attendance != null">
-                    <button class="btn btn-error text-xl" disabled>Submit</button>
+                    <button class="btn btn-error text-sm lg:text-xl" disabled>Submit</button>
                 </template>
             </div>
 
