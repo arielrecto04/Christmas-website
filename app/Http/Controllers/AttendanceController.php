@@ -39,6 +39,11 @@ class AttendanceController extends Controller
         $employee = json_decode($request->selected_employee);
 
 
+        if(!$employee){
+            return back()->with(['error' => 'Select your name first!']);   
+        }
+
+
         if($employee->attendance){
 
             return back()->with(['error' => 'You have attendance already']);

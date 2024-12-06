@@ -26,25 +26,31 @@
         <input type="hidden" name="selected_employee" x-model="JSON.stringify(selectedEmployee)">
         <label class="form-control w-full">
 
-            @if (Session::has('error'))
-                <p class="text-xs text-error">
-                    {{ Session::get('error') }}
+
+
+            <div class="flex flex-col gap-3 p-5">
+                @if (Session::has('error'))
+                    <p class="text-xs text-error">
+                        {{ Session::get('error') }}
+                    </p>
+                @endif
+
+                <p x-text="error?.hasAttendance" class="text-xs text-error">
+
                 </p>
-            @endif
-            <p x-text="error?.hasAttendance" class="text-xs text-error">
+                <div x-show="selectedEmployee">
+                    <div
+                        class="flex p-5 rounded-lg shadow-lg justify-between items-center hover:scale-105 hover:shadow-red-500 duration-700">
+                        <h1 x-text="selectedEmployee?.name" class="text-lg font-bold"></h1>
 
-            </p>
-            <div x-show="selectedEmployee">
-                <div
-                    class="flex p-5 rounded-lg shadow-lg justify-between items-center hover:scale-105 hover:shadow-red-500 duration-700">
-                    <h1 x-text="selectedEmployee?.name" class="text-lg font-bold"></h1>
+                        <button type="button" @click="selectedEmployee = null" class="btn btn-error btn-xs">
+                            x
+                        </button>
+                    </div>
 
-                    <button type="button" @click="selectedEmployee = null" class="btn btn-error btn-xs">
-                        x
-                    </button>
                 </div>
-
             </div>
+
 
             <div class="grid grid-cols-2 grid-flow-row items-center gap-2 w-full p-5">
                 <div class="relative group" x-show="!selectedEmployee">
