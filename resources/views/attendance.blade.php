@@ -136,7 +136,7 @@
                                 return item;
                             }
                         })];
-                        console.log(this.results)
+                      
                     })
 
                     this.$watch('selectedEmployee', () => {
@@ -148,7 +148,7 @@
                     });
                 },
                 laodEmployees(data) {
-                    console.log(data);
+                  
                     this.employees = [...data];
                 },
                 toggleDropdown() {
@@ -159,7 +159,7 @@
                         ...data
                     };
 
-                    console.log(this.selectedEmployee);
+                    
 
                     // this.search = null;
 
