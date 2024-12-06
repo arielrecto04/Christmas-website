@@ -27,7 +27,7 @@
     {{-- <x-size /> --}}
 
     <div class="flex flex-col gap-2 w-full max-w-screen overflow-hidden h-auto">
-        <div class="flex items-center shadow-lg bg-red-500 opacity-95 p-5 flex justify-between sticky top-0 z-20"
+        <div class="flex items-center shadow-lg bg-red-500 opacity-95 p-5 flex justify-between sticky top-0 z-30"
             x-data="backMusic">
             <div class="flex items-center relative" x-init="loadAudio(`{{ asset('song.mp3') }}`)">
                 <a href="/" class="text-sm md:text-base lg:text-3xl font-bold text-white flex items-center gap-5">

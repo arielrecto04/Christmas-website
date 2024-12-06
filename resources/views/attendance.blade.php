@@ -5,7 +5,7 @@
         @csrf
 
         <div class="flex item-center justify-center">
-            <div class="w-[20rem] aspect-square">
+            <div class="w-[20rem] aspect-square z-10">
                 <x-clock />
             </div>
         </div>
