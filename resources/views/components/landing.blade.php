@@ -14,6 +14,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Eagle+Lake&family=Norican&display=swap" rel="stylesheet">
 
 
+    <link rel="shortcut icon" href="{{ asset('images/2.png') }}" type="image/x-icon">
+
     @stack('css')
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
@@ -84,7 +86,8 @@
         <div class="min-h-screen  bg-cover bg-fixed" style="background-image: url({{ asset('images/bg4.jpg') }})">
 
 
-            <div class="flex flex-col lg:flex-row items-center justify-start md:justify-center h-[60rem] md:min-h-screen relative w-full">
+            <div
+                class="flex flex-col lg:flex-row items-center justify-start md:justify-center h-[60rem] md:min-h-screen relative w-full">
 
                 <img src="{{ asset('images/b2.png') }}" alt="" srcset=""
                     class="absolute z-10 top-0 -left-[14rem] rotate-[100deg] w-[40rem] opacity-80">

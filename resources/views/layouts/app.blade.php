@@ -18,6 +18,7 @@
         href='https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
 
 
+    <link rel="shortcut icon" href="{{asset('images/2.png')}}" type="image/x-icon">
 
     @stack('links')
 
