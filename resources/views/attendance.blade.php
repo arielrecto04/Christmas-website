@@ -61,10 +61,8 @@
                           focus:ring-offset-gray-100 focus:ring-blue-500">
 
 
-                        <span class="mr-2 text-red-500 text-sm md:text-base lg:text-xl" x-show="!isOpen">Open
-                            Dropdown</span>
-                        <span class="mr-2 text-red-500 text-sm md:text-base lg:text-xl" x-show="isOpen">Close
-                            Dropdown</span>
+                        <span class="mr-2 text-red-500 text-sm md:text-base lg:text-xl" x-show="!isOpen">Find your name</span>
+                        <span class="mr-2 text-red-500 text-sm md:text-base lg:text-xl" x-show="isOpen">Find your name</span>
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 ml-2 -mr-1" viewBox="0 0 20 20"
                             fill="currentColor" aria-hidden="true">
                             <path fill-rule="evenodd"
