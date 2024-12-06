@@ -52,7 +52,7 @@
             </div>
 
 
-            <div class="grid grid-cols-2 grid-flow-row items-center gap-2 w-full p-5">
+            <div class="grid grid-cols-1 md:grid-cols-2 grid-flow-row items-center gap-2 w-full p-5">
                 <div class="relative group" x-show="!selectedEmployee">
                     <button @click="toggleDropdown" type="button"
                         class="inline-flex justify-center w-full
