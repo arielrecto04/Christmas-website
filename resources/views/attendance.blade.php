@@ -148,7 +148,7 @@
                     this.$watch('search', () => {
                         this.results = [...this.employees.filter((item) => {
                             const text = item.name.toLowerCase();
-                            if (text.includes(this.search)) {
+                            if (text.includes(this.search.toLowerCase())) {
                                 return item;
                             }
                         })];
