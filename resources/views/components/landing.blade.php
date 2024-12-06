@@ -17,9 +17,11 @@
     @stack('css')
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
 </head>
 
-<body class="bg-gray-100 relative">
+<body class="bg-gray-100 relative h-auto w-full max-x-screen overflow-hidden ">
 
     {{-- <x-size /> --}}
     <div class="flex items-center shadow-lg bg-red-500 opacity-95 p-5 flex justify-between sticky top-0 z-20"
@@ -36,26 +38,41 @@
                 class="absolute z-10 -right-14 animate-bounce w-12 aspect-square mb-2">
         </div>
 
-        <div class="flex items-center gap-2">
+        <div class="md:flex items-center gap-2 text-xs lg:text-lg hidden">
             <a href="/"
-                class="text-lg font-semibold text-white p-2 uppercase tracking-wider  hover:link hover:link-white hover:scale-105  duration-700">
+                class="font-semibold text-white p-2 uppercase tracking-wider  hover:link hover:link-white hover:scale-105  duration-700">
                 Home
             </a>
             <a href="{{ route('attendance.index') }}"
-                class="text-lg font-semibold text-white p-2 uppercase tracking-wider  hover:link hover:link-white hover:scale-105  duration-700">
+                class="font-semibold text-white p-2 uppercase tracking-wider  hover:link hover:link-white hover:scale-105  duration-700">
                 Attendances
             </a>
             <a href="https://plotest.odoo.com/survey/start/c7586999-5a14-432b-b656-c3f8ac11f23d"
-                class="text-lg font-semibold text-white p-2 uppercase tracking-wider  hover:link hover:link-white hover:scale-105  duration-700">
+                class="font-semibold text-white p-2 uppercase tracking-wider  hover:link hover:link-white hover:scale-105  duration-700">
                 Survey
             </a>
         </div>
 
-        <a href="{{ route('login') }}" class="bg-white text-red-500 btn">
+        <a href="{{ route('login') }}" class="md:flex bg-white text-red-500 btn hidden">
             login
         </a>
+
+
+        <div class="flex flex-col gap-2 md:hidden" x-ref="menu" x-data="{open : false}">
+            <button class="text-white" @click="open = !open">
+                <i class="fi fi-rr-menu-burger"></i>
+            </button>
+
+            <div x-show="open" x-anchor="$refs.menu" class="flex flex-col gap-2 bg-white p-2 rounded-lg shadow-lg w-[20rem]" x-transition.duration.700>
+                <a href="/" class="p-5 rounded-lg hover:bg-red-500 hover:text-white font-bold text-red-500 uppercase duration-700">Home</a>
+                <a href="{{route('attendance.index')}}" class="p-5 rounded-lg hover:bg-red-500 hover:text-white font-bold text-red-500 uppercase duration-700">Attendance</a>
+                <a href="https://plotest.odoo.com/survey/start/c7586999-5a14-432b-b656-c3f8ac11f23d" class="p-5 rounded-lg hover:bg-red-500 hover:text-white font-bold text-red-500 uppercase duration-700">Survey</a>
+                <a href="{{route('login')}}" class="p-5 rounded-lg bg-red-500 text-white font-bold hover:scale-105 uppercase duration-700">Login</a>
+
+            </div>
+        </div>
     </div>
-    <div class="min-h-screen w-full max-x-screen overflow-hidden bg-cover bg-fixed"
+    <div class="min-h-screen bg-cover bg-fixed"
         style="background-image: url({{ asset('images/bg4.jpg') }})">
 
 

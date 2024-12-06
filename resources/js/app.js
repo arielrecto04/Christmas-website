@@ -2,6 +2,9 @@ import "./bootstrap";
 
 import Alpine from "alpinejs";
 
+import anchor from '@alpinejs/anchor'
+ 
+
 window.Alpine = Alpine;
 
 Alpine.data("textAnimation", () => ({
@@ -57,5 +60,7 @@ Alpine.data("backMusic", () => ({
         this.URL = data;
     },
 }));
+
+Alpine.plugin(anchor)
 
 Alpine.start();
