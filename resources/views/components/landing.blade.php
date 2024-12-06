@@ -26,7 +26,7 @@
 
     {{-- <x-size /> --}}
 
-    <div class="flex flex-col gap-2 w-full max-w-screen overflow-hidden">
+    <div class="flex flex-col gap-2 w-full max-w-screen overflow-hidden h-auto">
         <div class="flex items-center shadow-lg bg-red-500 opacity-95 p-5 flex justify-between sticky top-0 z-20"
             x-data="backMusic">
             <div class="flex items-center relative" x-init="loadAudio(`{{ asset('song.mp3') }}`)">
@@ -81,7 +81,7 @@
                 </div>
             </div>
         </div>
-        <div class="min-h-screen bg-cover bg-fixed" style="background-image: url({{ asset('images/bg4.jpg') }})">
+        <div class="min-h-screen  bg-cover bg-fixed" style="background-image: url({{ asset('images/bg4.jpg') }})">
 
 
             <div class="flex items-center justify-center min-h-screen relative w-full">
