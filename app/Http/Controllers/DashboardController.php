@@ -2,31 +2,30 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Employee;
 use App\Models\Attendance;
-use Illuminate\Http\Request;
+use App\Models\User;
 
 class DashboardController extends Controller
 {
     public function dashboard()
     {
-        $employeeAttendances = Employee::join('attendances', 'employees.id', '=', 'attendances.employee_id')
+        $userAttendances = User::join('attendances', 'users.id', '=', 'attendances.user_id')
             ->orderBy('attendances.arrival_date', 'asc')
-            ->select('employees.*')
+            ->select('users.*')
             ->paginate(10);
 
         $totalAttendees = Attendance::count();
 
-        $totalEmployees = Employee::count();
+        $totalUsers = User::count();
 
 
         $attendanceDataSet = [
-            'present' => Employee::whereHas('attendance')->count(),
-            'absent' => Employee::whereDoesntHave('attendance')->count()
+            'present' => User::whereHas('attendance')->count(),
+            'absent' => User::whereDoesntHave('attendance')->count()
         ];
 
       
 
-        return view('dashboard', compact('employeeAttendances', 'totalAttendees', 'totalEmployees', 'attendanceDataSet'));
+        return view('dashboard', compact('userAttendances', 'totalAttendees', 'totalUsers', 'attendanceDataSet'));
     }
 }

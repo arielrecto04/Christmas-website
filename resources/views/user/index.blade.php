@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Employee') }}
+            {{ __('User') }}
         </h2>
     </x-slot>
 
@@ -14,7 +14,7 @@
                 <div class="overflow-x-auto p-2">
                     <div class="flex items-center justify-between">
                         <h1 class="text-lg font-bold gap-2">
-                            Employees
+                            Users
                         </h1>
                         <div class="flex items-center gap-2" x-data="{
                             tooltipID : null,
@@ -33,18 +33,35 @@
                             <tr>
                                 <th></th>
                                 <th>Name</th>
+                                <th>Role</th>
                                 <th>Ticket Number</th>
+                                <th>Attendance</th>
 
                             </tr>
                         </thead>
                         <tbody>
                             <!-- row 1 -->
 
-                            @forelse ($employees as $employee)
+                            @forelse ($users as $user)
                                 <tr>
                                     <th></th>
-                                    <td>{{ $employee->name }}</td>
-                                    <td>{{ $employee->ticket_number }}</td>
+                                    <td>{{ $user->name }}</td>
+                                    <td>
+                                        @foreach($user->roles as $role)
+                                            @if($role->name == 'admin')
+                                            <span class="badge badge-primary">{{ $role->name }}</span>`
+                                            @else
+                                            <span class="badge badge-secondary">{{ $role->name }}</span>
+                                            @endif
+                                        @endforeach
+                                    </td>
+                                    <td>{{ $user->ticket_number }}</td>
+                                    <td>
+                                        @if($user->attendance)
+                                            {{ date('F d, Y h:s A', strtotime($user->attendance->arrival_date)) }}
+                                        @else
+                                            <span class="text-gray-400">No Attendance</span>
+                                        @endif
                                 </tr>
 
                             @empty
@@ -56,7 +73,7 @@
                         </tbody>
                     </table>
 
-                    {!! $employees->links() !!}
+                    {!! $users->links() !!}
                 </div>
             </div>
 

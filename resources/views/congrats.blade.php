@@ -2,7 +2,7 @@
     <div class="flex flex-col gap-2">
         <div class="bg-white rounded-lg shadow-lg p-5 flex flex-col lg:flex-row items-center gap-5 w-full lg:min-w-[30rem] lg:max-w-[60rem]">
             <div class="w-full lg:w-auto rounded-lg p-5 lg:p-2 rounded-lg flex item-center bg-red-500 text-white font-bold">
-                {{ $employee->ticket_number }}
+                {{ $user->ticket_number }}
             </div>
 
 
@@ -15,11 +15,11 @@
                 </div>
 
                 <h1 class="font-bold text-2xl">
-                    <span>Name : </span> <span>{{ $employee->name }}</span>
+                    <span>Name : </span> <span>{{ $user->name }}</span>
                 </h1>
                 <h1 class="text-gray-500">
                     <span>Arrival Time : </span>
-                    <span>{{ date('F d, Y h:s A', strtotime($employee->attendance->arrival_date)) }}</span>
+                    <span>{{ date('F d, Y h:s A', strtotime($user->attendance->arrival_date)) }}</span>
                 </h1>
 
 

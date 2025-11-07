@@ -6,7 +6,9 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\UserController;
 use App\Models\Attendance;
+use App\Models\User;
 
 Route::get('/', function () {
     return view('welcome');
@@ -18,7 +20,7 @@ Route::get('/dashboard', [DashboardController::class, 'dashboard'])->middleware(
 Route::prefix('attendance')->as('attendance.')->group(function () {
     Route::get('', [AttendanceController::class, 'index'])->name('index');
     Route::post('', [AttendanceController::class, 'store'])->name('store');
-    Route::get('{employee}/congrats', [AttendanceController::class, 'congrats'])->name('congrats');
+    Route::get('{user}/congrats', [AttendanceController::class, 'congrats'])->name('congrats');
 });
 
 Route::middleware('auth')->group(function () {
@@ -33,12 +35,13 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::get('print-ticket', function () {
-        $employeesTicket = Employee::get();
+        $usersTicket = User::get();
 
-        return view('ticket', compact('employeesTicket'));
+        return view('ticket', compact('usersTicket'));
     })->name('print-ticket');
 
-    Route::resource('employees', EmployeeController::class);
+    Route::resource('users', UserController::class);
+
 
     Route::prefix('survey')->name('survey.')->group(function () {
         Route::get('/', function () {

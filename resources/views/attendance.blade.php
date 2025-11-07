@@ -23,7 +23,7 @@
         {{-- </div> --}}
 
 
-        <input type="hidden" name="selected_employee" x-model="JSON.stringify(selectedEmployee)">
+        <input type="hidden" name="selected_user" x-model="JSON.stringify(selectedUser)">
         <label class="form-control w-full">
 
 
@@ -38,12 +38,12 @@
                 <p x-text="error?.hasAttendance" class="text-xs text-error">
 
                 </p>
-                <div x-show="selectedEmployee">
+                <div x-show="selectedUser">
                     <div
                         class="flex p-5 rounded-lg shadow-lg justify-between items-center hover:scale-105 hover:shadow-red-500 duration-700">
-                        <h1 x-text="selectedEmployee?.name" class="text-lg font-bold"></h1>
+                        <h1 x-text="selectedUser?.name" class="text-lg font-bold"></h1>
 
-                        <button type="button" @click="selectedEmployee = null" class="btn btn-error btn-xs">
+                        <button type="button" @click="selectedUser = null" class="btn btn-error btn-xs">
                             x
                         </button>
                     </div>
@@ -53,7 +53,7 @@
 
 
             <div class="grid grid-cols-1 md:grid-cols-2 grid-flow-row items-center gap-2 w-full p-5">
-                <div class="relative group" x-show="!selectedEmployee">
+                <div class="relative group" x-show="!selectedUser">
                     <button @click="toggleDropdown" type="button"
                         class="inline-flex justify-center w-full
                          px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-red-500 
@@ -70,7 +70,7 @@
                                 clip-rule="evenodd" />
                         </svg>
                     </button>
-                    <div x-show="isOpen" x-init=" laodEmployees({{ json_encode($employees) }})"
+                    <div x-show="isOpen" x-init=" loadUsers({{ json_encode($users) }})"
                         class="absolute rigth-0 mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5
                         w-full p-1 space-y-1 overflow-y-auto max-h-44">
                         <!-- Search input -->
@@ -79,20 +79,20 @@
                             type="text" x-model.debounce="search" placeholder="Search..." autocomplete="off">
                         <!-- Dropdown content goes here -->
                         <template x-if="!search">
-                            <template x-for="employee in employees">
-                                <button type="button" @click="pickEmployee(employee)"
+                            <template x-for="user in users">
+                                <button type="button" @click="pickUser(user)"
                                     class="block px-4 py-2 text-gray-700 hover:bg-gray-100 
                                      w-full active:bg-blue-100 cursor-pointer rounded-md">
-                                    <span x-text="employee.name"></span>
+                                    <span x-text="user.name"></span>
                                 </button>
                             </template>
                         </template>
                         <template x-if="search">
-                            <template x-for="employee in results">
-                                <button type="button" @click="pickEmployee(employee)"
+                            <template x-for="user in results">
+                                <button type="button" @click="pickUser(user)"
                                     class="block px-4 py-2
                                     w-full text-gray-700 hover:bg-gray-100 active:bg-blue-100 cursor-pointer rounded-md">
-                                    <span x-text="employee.name"></span>
+                                    <span x-text="user.name"></span>
                                 </button>
                             </template>
                         </template>
@@ -100,11 +100,11 @@
 
                     </div>
                 </div>
-                <template x-if="selectedEmployee?.attendance == null">
+                <template x-if="selectedUser?.attendance == null">
                     <button class="btn btn-error  text-white text-sm lg:text-xl">Submit</button>
                 </template>
 
-                <template x-if="selectedEmployee?.attendance != null">
+                <template x-if="selectedUser?.attendance != null">
                     <button class="btn btn-error text-sm lg:text-xl" disabled>Submit</button>
                 </template>
             </div>
@@ -124,11 +124,11 @@
         <script>
             const timeIn = () => ({
                 initTime: null,
-                employees: [],
+                users: [],
                 search: null,
                 results: [],
                 isOpen: false,
-                selectedEmployee: null,
+                selectedUser: null,
                 error: {
 
                 },
@@ -144,7 +144,7 @@
 
 
                     this.$watch('search', () => {
-                        this.results = [...this.employees.filter((item) => {
+                        this.results = [...this.users.filter((item) => {
                             const text = item.name.toLowerCase();
                             if (text.includes(this.search.toLowerCase())) {
                                 return item;
@@ -153,23 +153,23 @@
 
                     })
 
-                    this.$watch('selectedEmployee', () => {
-                        if (this.selectedEmployee.attendance != null) {
+                    this.$watch('selectedUser', () => {
+                        if (this.selectedUser.attendance != null) {
                             this.error = {
                                 hasAttendance: 'You have attendance already'
                             }
                         }
                     });
                 },
-                laodEmployees(data) {
+                loadUsers(data) {
 
-                    this.employees = [...data];
+                    this.users = [...data];
                 },
                 toggleDropdown() {
                     this.isOpen = !this.isOpen;
                 },
-                pickEmployee(data) {
-                    this.selectedEmployee = {
+                pickUser(data) {
+                    this.selectedUser = {
                         ...data
                     };
 

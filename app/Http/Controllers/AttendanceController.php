@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\Employee;
 use App\Models\Attendance;
+use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
@@ -16,10 +17,10 @@ class AttendanceController extends Controller
     public function index()
     {
 
-        $employees = Employee::with(['attendance'])->get();
+        $users = User::with(['attendance'])->get();
 
 
-        return view('attendance', compact('employees'));
+        return view('attendance', compact('users'));
     }
 
     /**
@@ -36,15 +37,15 @@ class AttendanceController extends Controller
     public function store(Request $request)
     {
 
-        $employee = json_decode($request->selected_employee);
+        $user = json_decode($request->selected_user);
 
 
-        if(!$employee){
+        if(!$user){
             return back()->with(['error' => 'Select your name first!']);   
         }
 
 
-        if($employee->attendance){
+        if($user->attendance){
 
             return back()->with(['error' => 'You have attendance already']);
         }
@@ -56,11 +57,11 @@ class AttendanceController extends Controller
 
         Attendance::create([
             'arrival_date' => Carbon::parse($cleanedDateString),
-            'employee_id' => $employee->id
+            'user_id' => $user->id
         ]);
 
 
-        return to_route('attendance.congrats', ['employee' => $employee->slug]);
+        return to_route('attendance.congrats', ['user' => $user->slug]);
     }
 
     /**
@@ -103,12 +104,12 @@ class AttendanceController extends Controller
     public function congrats(string $name)
     {
 
-        $employee = Employee::where('slug', $name)->first();
+        $user = User::where('slug', $name)->first();
 
-        if (!$employee->attendance) {
+        if (!$user->attendance) {
             return to_route('attendance.index');
         }
 
-        return view('congrats', compact('employee'));
+        return view('congrats', compact('user'));
     }
 }

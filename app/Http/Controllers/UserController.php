@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Employee;
+use App\Models\User;
 use Illuminate\Http\Request;
 
-class EmployeeController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $employees = Employee::paginate(10);
+        $users = User::paginate(10);
 
-        return view('employee.index', compact('employees'));
+        return view('user.index', compact('users'));
     }
 
     /**

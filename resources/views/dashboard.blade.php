@@ -11,7 +11,7 @@
 
             <div class="grid grid-cols-2 grid-flow-row gap-2 w-full">
                 <x-card label="Total Attendees" :url="route('dashboard')" :total="$totalAttendees" sub_label="Attendances" />
-                <x-card label="Total Employees" :url="route('employees.index')" :total="$totalEmployees" sub_label="Employees" />
+                <x-card label="Total User" :url="route('users.index')" :total="$totalUsers" sub_label="User" />
             </div>
 
             {{-- <div class="bg-white p-5 rounded-lg shadow-lg flex items-center justify-center">
@@ -21,7 +21,7 @@
             <div class="bg-white rounded-lg shadow-lg flex flex-col gap-2">
                 <div class="overflow-x-auto p-2">
                     <h1 class="text-lg font-bold gap-2">
-                        Employee Attendance
+                        User Attendance
                     </h1>
                     <table class="table">
                         <!-- head -->
@@ -37,17 +37,17 @@
                         <tbody>
                             <!-- row 1 -->
 
-                            @forelse ($employeeAttendances as $employeeAttendance)
+                            @forelse ($userAttendances as $userAttendance)
                                 <tr>
                                     <th></th>
-                                    <td>{{ $employeeAttendance->name }}</td>
-                                    <td>{{ $employeeAttendance->ticket_number }}</td>
-                                    <td>{{ date('F d, Y h:s A', strtotime($employeeAttendance->attendance->arrival_date)) }}
+                                    <td>{{ $userAttendance->name }}</td>
+                                    <td>{{ $userAttendance->ticket_number }}</td>
+                                    <td>{{ date('F d, Y h:s A', strtotime($userAttendance->attendance->arrival_date)) }}
                                     </td>
                                     <td class="flex items-center gap-2">
 
                                         <form
-                                            action="{{ route('attendance.destroy', ['attendance' => $employeeAttendance->attendance->id]) }}"
+                                            action="{{ route('attendance.destroy', ['attendance' => $userAttendance->attendance->id]) }}"
                                             method="post">
                                             @csrf
                                             @method('DELETE')
