@@ -28,7 +28,7 @@ Route::middleware('auth')->group(function () {
 
 
 
-    Route::prefix('attendance')->as('attendance.')->group(function(){
+    Route::prefix('attendance')->as('attendance.')->group(function () {
         Route::delete('{attendance}', [AttendanceController::class, 'destroy'])->name('destroy');
     });
 
@@ -39,6 +39,16 @@ Route::middleware('auth')->group(function () {
     })->name('print-ticket');
 
     Route::resource('employees', EmployeeController::class);
+
+    Route::prefix('survey')->name('survey.')->group(function () {
+        Route::get('/', function () {
+            return view('survey');
+        })->name('index'); // This becomes route name: survey.index
+
+        Route::get('/vote', function () {
+            return view('vote');
+        })->name('vote'); // This becomes route name: survey.vote
+    });
 });
 
 require __DIR__ . '/auth.php';
