@@ -50,6 +50,11 @@ class User extends Authenticatable
         return $this->hasOne(Attendance::class);
     }
 
+    public function ticket()
+    {
+        return $this->hasOne(Ticket::class);
+    }
+
     public function roles()
     {
         return $this->belongsToMany(Role::class, 'user_roles');
@@ -59,4 +64,20 @@ class User extends Authenticatable
     {
         return $this->hasMany(UserRole::class);
     }
+
+    public function is_admin()
+    {
+        return $this->roles->pluck('name')->contains('admin');
+    }
+
+    public function votes()
+    {
+        return $this->hasMany(CandidateVote::class);
+    }
+
+    public function candidates()
+    {
+        return $this->hasMany(SurveyCandidate::class);
+    }
+
 }
