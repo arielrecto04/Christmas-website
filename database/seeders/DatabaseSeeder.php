@@ -40,15 +40,11 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('employee123')
         ]);
 
-        Ticket::create([
-            'user_id' => $employee->id,
+        $employee->ticket()->create([
             'ticket_number' => Ticket::generateTicketNumber()
         ]);
-
         $employee->roles()->attach(Role::where('name', 'employee')->first()->id);
-
-        $employee = Attendance::create([
-            'user_id' => $employee->id,
+        $employee->attendance()->create([
             'arrival_date' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
 
@@ -58,50 +54,48 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('admin123')
         ]);
                 
-        Ticket::create([
-            'user_id' => $admin->id,
+        $admin->ticket()->create([
             'ticket_number' => Ticket::generateTicketNumber()
         ]);
 
         $admin->roles()->attach(Role::where('name', 'admin')->first()->id);
 
-        $admin = Attendance::create([
-            'user_id' => $admin->id,
+        $admin->attendance()->create([
             'arrival_date' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
         
         $employees = [
             'Jhaymee Magnawa',
             'Angeline Boton',
-            'Dave Giron',
-            'Ariel Recto',
-            'Steven Vicente',
-            'Ryan Marte',
-            'Harold Jamisola',
-            'Vash Ulric Ancheta',
-            'Alethea Teope',
-            'Cesar Piñero',
-            'Shen Angeles',
-            'Ronan Manzanares',
-            'Alfer Alviz',
-            'Ryan Antiquerra',
-            'Vincent Bajenting',
-            'John Bañares',
-            'Karl Brao',
-            'Renzo Contante',
-            'Henry Ganal',
-            'Harrold Rebana',
-            'DJ Supsup',
-            'Mhon Perez',
-            'Aries Castro',
-            'Albert Punzalan',
-            'John Den Borja',
-            'Anthony Garingalao',
-            'Jay Patallano',
-            'Andie Hofstetter',
-            "M'PHD - Patricia H. Depante",
-            "M'RHD1 - Renee H. Depante",
-            "M'RHD2 - Regina H. Depante",
+            // 'Dave Giron',
+            // 'Ariel Recto',
+            // 'Steven Vicente',
+            // 'Ryan Marte',
+            // 'Harold Jamisola',
+            // 'Vash Ulric Ancheta',
+            // 'Alethea Teope',
+            // 'Cesar Piñero',
+            // 'Shen Angeles',
+            // 'Ronan Manzanares',
+            // 'Alfer Alviz',
+            // 'Ryan Antiquerra',
+            // 'Vincent Bajenting',
+            // 'John Bañares',
+            // 'Karl Brao',
+            // 'Renzo Contante',
+            // 'Henry Ganal',
+            // 'Harrold Rebana',
+            // 'DJ Supsup',
+            // 'Mhon Perez',
+            // 'Aries Castro',
+            // 'Albert Punzalan',
+            // 'John Den Borja',
+            // 'Anthony Garingalao',
+            // 'Jay Patallano',
+            // 'Andie Hofstetter',
+            // "M'PHD - Patricia H. Depante",
+            // "M'RHD1 - Renee H. Depante",
+            // "M'RHD2 - Regina H. Depante",
         ];
 
         collect($employees)->map(function($employee){
@@ -112,14 +106,10 @@ class DatabaseSeeder extends Seeder
             ]);
 
             $user->roles()->attach(Role::where('name', 'employee')->first()->id);
-
-            Ticket::create([
-                'user_id' => $user->id,
+            $user->ticket()->create([
                 'ticket_number' => Ticket::generateTicketNumber()
             ]);
-
-            Attendance::create([
-                'user_id' => $user->id,
+            $user->attendance()->create([
                 'arrival_date' => Carbon::now()->format('Y-m-d H:i:s'),
             ]);
         });
@@ -130,15 +120,11 @@ class DatabaseSeeder extends Seeder
             'name' => 'Best Outfit',
             'year' => Carbon::now()->year
         ]);
-
-        $candidate = SurveyCandidate::create([
-            'survey_id' => $survey->id,
-            'user_id' => $sampleCandidate->id
+        $candidate = $survey->candidates()->create([
+            'user_id' => $sampleCandidate->id,
         ]);
-
-        CandidateVote::create([
-            'user_id' => $employee->id,
-            'survey_candidate_id' => $candidate->id
+        $employee->votes()->create([
+            'survey_candidate_id' => $candidate->id,
         ]);
     }
 }
