@@ -10,6 +10,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\CandidateVoteController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -36,26 +37,19 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::get('print-ticket', function () {
-        $usersTicket = User::get();
+        $users = User::get();
 
-        return view('ticket', compact('usersTicket'));
+        return view('ticket', compact('users'));
     })->name('print-ticket');
 
     Route::resource('users', UserController::class);
+    Route::resource('surveys', SurveyController::class);
 
 
     Route::prefix('christmas')->name('christmas.')->group(function () {
-        Route::get('/survey', function () {
-            return view('survey');
-        })->name('index');
-
-        Route::get('/vote', function () {
-            return view('vote');
-        })->name('vote');
-
-        Route::get('/attendance', function () {
-            return view('attendance2');
-        })->name('attendance');
+        Route::get('/survey', [SurveyController::class, 'index'])->name('survey');
+        Route::get('/vote', [CandidateVoteController::class, 'index'])->name('vote');
+        Route::get('/attendance', [AttendanceController::class, 'index'])->name('attendance');
     });
 
     Route::post('/survey', [SurveyController::class, 'store'])->name('survey.store');
