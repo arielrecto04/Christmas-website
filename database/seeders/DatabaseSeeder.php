@@ -3,9 +3,12 @@
 namespace Database\Seeders;
 
 use App\Models\Attendance;
+use App\Models\CandidateVote;
 use App\Models\User;
 use App\Models\Employee;
 use App\Models\Role;
+use App\Models\Survey;
+use App\Models\SurveyCandidate;
 use App\Models\Ticket;
 use Carbon\Carbon;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -120,5 +123,22 @@ class DatabaseSeeder extends Seeder
                 'arrival_date' => Carbon::now()->format('Y-m-d H:i:s'),
             ]);
         });
+
+        $sampleCandidate = $admin;
+
+        $survey = Survey::create([
+            'name' => 'Best Outfit',
+            'year' => Carbon::now()->year
+        ]);
+
+        $candidate = SurveyCandidate::create([
+            'survey_id' => $survey->id,
+            'user_id' => $sampleCandidate->id
+        ]);
+
+        CandidateVote::create([
+            'user_id' => $employee->id,
+            'survey_candidate_id' => $candidate->id
+        ]);
     }
 }
