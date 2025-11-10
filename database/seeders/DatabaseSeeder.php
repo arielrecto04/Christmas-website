@@ -6,6 +6,7 @@ use App\Models\Attendance;
 use App\Models\User;
 use App\Models\Employee;
 use App\Models\Role;
+use App\Models\Ticket;
 use Carbon\Carbon;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Support\Str;
@@ -30,61 +31,89 @@ class DatabaseSeeder extends Seeder
             Role::firstOrCreate(['name' => $role]);
         }
 
-        $user = User::create([
-            'name' => 'admin',
-            'email' => 'admin@admin.com',
-            'ticket_number' => 'TICKET-' . str_pad(mt_rand(0, 9999), 4, '0', STR_PAD_LEFT),
-            'password' => Hash::make('admin123')
+        $employee = User::create([
+            'name' => 'employee',
+            'email' => 'employee@employee.com',
+            'password' => Hash::make('employee123')
         ]);
 
-        $user->roles()->attach(Role::where('name', 'admin')->first()->id);
+        Ticket::create([
+            'user_id' => $employee->id,
+            'ticket_number' => Ticket::generateTicketNumber()
+        ]);
 
-        $user = Attendance::create([
-            'user_id' => $user->id,
+        $employee->roles()->attach(Role::where('name', 'employee')->first()->id);
+
+        $employee = Attendance::create([
+            'user_id' => $employee->id,
             'arrival_date' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
 
+        $admin = User::create([
+            'name' => 'admin',
+            'email' => 'admin@admin.com',
+            'password' => Hash::make('admin123')
+        ]);
+                
+        Ticket::create([
+            'user_id' => $admin->id,
+            'ticket_number' => Ticket::generateTicketNumber()
+        ]);
+
+        $admin->roles()->attach(Role::where('name', 'admin')->first()->id);
+
+        $admin = Attendance::create([
+            'user_id' => $admin->id,
+            'arrival_date' => Carbon::now()->format('Y-m-d H:i:s'),
+        ]);
+        
         $employees = [
-            "RHD1",
-            "PHD",
-            "VHD",
-            "RHD2",
-            "Ronan Vilela Manzanares",
-            "Montano Castillo Plata",
-            "Anthony Saldon Garingaloa",
-            "Dan Brian Gamulo Perez",
-            "Andie Cabahug Hofstetter",
-            "Jay Salazar Pantallano",
-            "Jan Karl Bautista Brao",
-            "Angeline Caparino Boton",
-            "Dave Vincin Mendoza Giron",
-            "Alfer Dave Alviz",
-            "Efren Guilas Jr.",
-            "Joseph C. Galisim",
-            "Joshua Bagayan",
-            "John Emerson Banares",
-            "Henry Ganal",
-            "Gerald Paul Ruga",
-            "Aries T. Castro",
-            "DJ Boy Supsup",
-            "Mary Jane Restrivera",
-            "Vincent Anthony R. Bajenting",
-            "Ariel Recto",
-            "Shen Ramil",
-            "Paul John Bulangay",
-            "Leriza Rolea"
+            'Jhaymee Magnawa',
+            'Angeline Boton',
+            'Dave Giron',
+            'Ariel Recto',
+            'Steven Vicente',
+            'Ryan Marte',
+            'Harold Jamisola',
+            'Vash Ulric Ancheta',
+            'Alethea Teope',
+            'Cesar Piñero',
+            'Shen Angeles',
+            'Ronan Manzanares',
+            'Alfer Alviz',
+            'Ryan Antiquerra',
+            'Vincent Bajenting',
+            'John Bañares',
+            'Karl Brao',
+            'Renzo Contante',
+            'Henry Ganal',
+            'Harrold Rebana',
+            'DJ Supsup',
+            'Mhon Perez',
+            'Aries Castro',
+            'Albert Punzalan',
+            'John Den Borja',
+            'Anthony Garingalao',
+            'Jay Patallano',
+            'Andie Hofstetter',
+            "M'PHD - Patricia H. Depante",
+            "M'RHD1 - Renee H. Depante",
+            "M'RHD2 - Regina H. Depante",
         ];
 
         collect($employees)->map(function($employee){
             $user = User::create([
                 'name' => $employee,
-                'slug' => Str::slug($employee),
                 'email' => Str::slug($employee) . '@gmail.com',
                 'password' => Hash::make('password'),
-                'ticket_number' => 'TICKET-' . str_pad(mt_rand(0, 9999), 4, '0', STR_PAD_LEFT),
             ]);
 
             $user->roles()->attach(Role::where('name', 'employee')->first()->id);
+
+            Ticket::create([
+                'user_id' => $user->id,
+                'ticket_number' => Ticket::generateTicketNumber()
+            ]);
 
             Attendance::create([
                 'user_id' => $user->id,

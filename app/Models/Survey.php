@@ -13,5 +13,13 @@ class Survey extends Model
         'date_year',
     ];
 
-    
+    public function votes()
+    {
+        return $this->hasMany(CandidateVote::class);
+    }
+
+    public function candidates()
+    {
+        return $this->hasMany(SurveyCandidate::class);
+    }
 }
