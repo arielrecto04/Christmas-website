@@ -7,20 +7,23 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 flex flex-col gap-2">
-            <div class="bg-white rounded-lg shadow-lg flex flex-col gap-2">
-                <div class="flex flex-row">
-                    <div class="join">
-                        <a href="{{ route('christmas.index') }}" class="btn join-item">Surveys</a>
-                        <a href="{{ route('christmas.attendance') }}" class="btn join-item">Attendance</a>
-                        <a href="{{ route('christmas.vote') }}" class="btn join-item">Vote</a>
+            <x-container>
+                <div class="flex flex-col gap-6">
+                    <div class="flex flex-row">
+                        <div class="join">
+                            <a href="{{ route('christmas.index') }}" class="btn join-item">Surveys</a>
+                            <a href="{{ route('christmas.attendance') }}" class="btn join-item">Attendance</a>
+                            <a href="{{ route('christmas.vote') }}" class="btn join-item">Vote</a>
+                        </div>
+                    </div>
+                    <div class="flex flex-col items-center gap-8">
+                        <div class="w-[20rem] aspect-square">
+                            <x-clock />
+                        </div>
+                        <button class="btn">Submit Attendance</button>
                     </div>
                 </div>
-                <div>
-                    <div class="w-[20rem] aspect-square" x-data="timeIn">
-                        <x-clock />
-                    </div>
-                </div>
-            </div>
+            </x-container>
         </div>
     </div>
 </x-app-layout>
