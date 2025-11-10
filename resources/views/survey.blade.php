@@ -11,7 +11,7 @@
                 <div class="flex flex-col gap-6">
                     <div class="flex flex-row justify-between">
                         <div class="join">
-                            <a href="{{ route('christmas.index') }}" class="btn join-item">Surveys</a>
+                            <a href="{{ route('christmas.survey') }}" class="btn join-item">Surveys</a>
                             <a href="{{ route('christmas.attendance') }}" class="btn join-item">Attendance</a>
                             <a href="{{ route('christmas.vote') }}" class="btn join-item">Vote</a>
                         </div>
