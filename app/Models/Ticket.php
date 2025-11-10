@@ -11,7 +11,7 @@ class Ticket extends Model
         'ticket_number',
     ];
 
-    public function generateTicketNumber(): string
+    public static function generateTicketNumber(): string
     {
         return 'TICKET-' . str_pad(mt_rand(0, 9999), 4, '0', STR_PAD_LEFT);
     }
