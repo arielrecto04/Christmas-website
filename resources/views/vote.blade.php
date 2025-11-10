@@ -31,24 +31,10 @@
                                 <tbody>
                                     <!-- row 1 -->
                                     <tr>
-                                        <th>1</th>
+                                        <td>1</td>
                                         <td>Cy Ganderton</td>
                                         <td>Quality Control Specialist</td>
-                                        <td>Blue</td>
-                                    </tr>
-                                    <!-- row 2 -->
-                                    <tr>
-                                        <th>2</th>
-                                        <td>Hart Hagerty</td>
-                                        <td>Desktop Support Technician</td>
-                                        <td>Purple</td>
-                                    </tr>
-                                    <!-- row 3 -->
-                                    <tr>
-                                        <th>3</th>
-                                        <td>Brice Swyre</td>
-                                        <td>Tax Accountant</td>
-                                        <td>Red</td>
+                                        <td><button class="btn" onclick="vote_modal.showModal()">Vote</button></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -58,4 +44,17 @@
             </x-container>
         </div>
     </div>
+
+    <dialog id="vote_modal" class="modal">
+        <div class="modal-box">
+            <h3 class="text-lg font-bold">Hello!</h3>
+            <p class="py-4">Press ESC key or click the button below to close</p>
+            <div class="modal-action">
+                <form method="dialog">
+                    <!-- if there is a button in form, it will close the modal -->
+                    <button class="btn">Close</button>
+                </form>
+            </div>
+        </div>
+    </dialog>
 </x-app-layout>
