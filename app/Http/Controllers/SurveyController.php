@@ -12,15 +12,15 @@ class SurveyController extends Controller
         $attribute = $request->validate([
             'name' => 'required',
             'description' => 'nullable',
-            'is_active' => 'boolean',
             'year' => 'required'
         ]);
 
         Survey::create([
             'name' => $attribute['name'],
             'description' => $attribute['description'] ?? null,
-            'is_active' => true,
+            'is_active' => $request->has('is_active') ? 1 : 0,
             'date_year' => $attribute['year'],
         ]);
+        return back()->with('success', 'Vote submitted successfully!');
     }
 }

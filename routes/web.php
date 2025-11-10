@@ -1,14 +1,15 @@
 <?php
 
-use App\Models\Employee;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\AttendanceController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\EmployeeController;
-use App\Http\Controllers\UserController;
-use App\Models\Attendance;
 use App\Models\User;
+use App\Models\Employee;
+use App\Models\Attendance;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\SurveyController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\AttendanceController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -56,6 +57,8 @@ Route::middleware('auth')->group(function () {
             return view('attendance2');
         })->name('attendance');
     });
+
+    Route::post('/survey', [SurveyController::class, 'store'])->name('survey.store');
 });
 
 require __DIR__ . '/auth.php';

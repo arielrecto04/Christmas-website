@@ -95,16 +95,45 @@
             </x-container>
         </div>
     </div>
-    <dialog id="add_survey_modal" class="modal">
+    <dialog x-data id="add_survey_modal" x-ref="addSurveyModal" class="modal">
         <div class="modal-box">
-            <h3 class="text-lg font-bold">Hello!</h3>
-            <p class="py-4">Press ESC key or click the button below to close</p>
-            <div class="modal-action">
-                <form method="dialog">
+            <h3 class="text-lg font-bold mb-8">Add Survey</h3>
+            <form method="POST" action="{{ route('survey.store') }}">
+                @csrf
+
+                @if ($errors->any())
+                <div class="bg-red-100 text-red-700 p-4 mb-4 rounded">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                @endif
+                <div class="flex flex-col gap-6">
+                    <div class="flex flex-col gap-2">
+                        <label for="survey-name" class="label-text font-semibold">Name</label>
+                        <input type="text" name="name" placeholder="Enter survey name" id="survey-name"
+                            class="input input-bordered w-full" />
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <label for="description" class="label-text font-semibold">Description</label>
+                        <input type="text" name="description" placeholder="Enter survey description" id="description"
+                            class="input input-bordered w-full" />
+                    </div>
+                    <div class="flex flex-col gap-2 items-start">
+                        <label class="label cursor-pointer gap-2">
+                            <input type="checkbox" name="is_active" checked="checked" class="checkbox" />
+                            <span class="label-text">Active</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-action">
                     <!-- if there is a button in form, it will close the modal -->
-                    <button class="btn">Close</button>
-                </form>
-            </div>
+                    <button type="button" class="btn" @click="$refs.addSurveyModal.close()">Close</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
         </div>
     </dialog>
 </x-app-layout>
