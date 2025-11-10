@@ -11,7 +11,7 @@
                 <div class="flex flex-col gap-6">
                     <div class="flex flex-row">
                         <div class="join">
-                            <a href="{{ route('christmas.index') }}" class="btn join-item">Surveys</a>
+                            <a href="{{ route('christmas.survey') }}" class="btn join-item">Surveys</a>
                             <a href="{{ route('christmas.attendance') }}" class="btn join-item">Attendance</a>
                             <a href="{{ route('christmas.vote') }}" class="btn join-item">Vote</a>
                         </div>
@@ -20,7 +20,13 @@
                         <div class="w-[20rem] aspect-square">
                             <x-clock />
                         </div>
-                        <button class="btn">Submit Attendance</button>
+                        <form method="POST" action="{{ route('attendance.store') }}">
+                            @csrf
+                            <button type="submit" class="btn" 
+                                @if(auth()->user()->attendance) disabled @endif>
+                                {{ auth()->user()->attendance ? 'Attendance Submitted' : 'Submit Attendance' }}
+                            </button>
+                        </form>
                     </div>
                 </div>
             </x-container>

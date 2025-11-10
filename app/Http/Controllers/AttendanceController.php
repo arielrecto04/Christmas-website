@@ -8,6 +8,7 @@ use App\Models\Attendance;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AttendanceController extends Controller
 {
@@ -20,7 +21,7 @@ class AttendanceController extends Controller
         $users = User::with(['attendance'])->get();
 
 
-        return view('attendance', compact('users'));
+        return view('attendance2', compact('users'));
     }
 
     /**
@@ -34,34 +35,19 @@ class AttendanceController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store()
     {
+        $user = auth()->user();
 
-        $user = json_decode($request->selected_user);
-
-
-        if(!$user){
-            return back()->with(['error' => 'Select your name first!']);   
+        if ($user->attendance) {
+            return back()->with('error', 'You have already submitted your attendance.');
         }
 
-
-        if($user->attendance){
-
-            return back()->with(['error' => 'You have attendance already']);
-        }
-
-    
-
-        $cleanedDateString = preg_replace('/\(.*?\)/', '', $request->arrival_date);
-
-
-        Attendance::create([
-            'arrival_date' => Carbon::parse($cleanedDateString),
-            'user_id' => $user->id
+        $user->attendance()->create([
+            'arrival_date' => Carbon::now(),
         ]);
 
-
-        return to_route('attendance.congrats', ['user' => $user->slug]);
+        return redirect()->route('christmas.attendance')->with('message', 'Attendance successfully worked');
     }
 
     /**
@@ -95,18 +81,20 @@ class AttendanceController extends Controller
     {
         $attendance = Attendance::find($id);
 
-        $attendance->delete();
+        if (!$attendance) {
+            return back()->with(['error' => 'Attendance not found.']);
+        }
 
+        $attendance->delete();
 
         return back()->with(['message' => 'Attendance Deleted']);
     }
 
     public function congrats(string $name)
     {
+        $user = User::all()->firstWhere(fn($u) => Str::slug($u->name) === $name);
 
-        $user = User::where('slug', $name)->first();
-
-        if (!$user->attendance) {
+        if (!$user || !$user->attendance) {
             return to_route('attendance.index');
         }
 

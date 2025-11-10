@@ -9,9 +9,8 @@ class DashboardController extends Controller
 {
     public function dashboard()
     {
-        $userAttendances = User::join('attendances', 'users.id', '=', 'attendances.user_id')
-            ->orderBy('attendances.arrival_date', 'asc')
-            ->select('users.*')
+        $attendances = Attendance::with(['user.ticket'])
+            ->orderBy('arrival_date', 'asc')
             ->paginate(10);
 
         $totalAttendees = Attendance::count();
@@ -26,6 +25,6 @@ class DashboardController extends Controller
 
       
 
-        return view('dashboard', compact('userAttendances', 'totalAttendees', 'totalUsers', 'attendanceDataSet'));
+        return view('dashboard', compact('attendances', 'totalAttendees', 'totalUsers', 'attendanceDataSet'));
     }
 }

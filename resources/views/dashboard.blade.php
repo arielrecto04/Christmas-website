@@ -37,17 +37,17 @@
                         <tbody>
                             <!-- row 1 -->
 
-                            @forelse ($userAttendances as $userAttendance)
+                            @forelse ($attendances as $attendance)
                                 <tr>
                                     <th></th>
-                                    <td>{{ $userAttendance->name }}</td>
-                                    <td>{{ $userAttendance->ticket_number }}</td>
-                                    <td>{{ date('F d, Y h:s A', strtotime($userAttendance->attendance->arrival_date)) }}
+                                    <td>{{ $attendance->user->name }}</td>
+                                    <td>{{ $attendance->user->ticket->ticket_number }}</td>
+                                    <td>{{ date('F d, Y h:s A', strtotime($attendance->arrival_date)) }}
                                     </td>
                                     <td class="flex items-center gap-2">
 
                                         <form
-                                            action="{{ route('attendance.destroy', ['attendance' => $userAttendance->attendance->id]) }}"
+                                            action="{{ route('attendance.destroy', ['attendance' => $attendance->id]) }}"
                                             method="post">
                                             @csrf
                                             @method('DELETE')
