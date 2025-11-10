@@ -23,10 +23,10 @@
                                 <!-- head -->
                                 <thead>
                                     <tr>
-                                        <th></th>
-                                        <th>Name</th>
-                                        <th>Job</th>
-                                        <th>Favorite Color</th>
+                                        <th>Survey Name</th>
+                                        <th>Description</th>
+                                        <th class="w-32 text-center">Active</th>
+                                        <th class="w-48 text-center">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -34,22 +34,58 @@
                                     <tr>
                                         <th>1</th>
                                         <td>Cy Ganderton</td>
-                                        <td>Quality Control Specialist</td>
-                                        <td>Blue</td>
-                                    </tr>
-                                    <!-- row 2 -->
-                                    <tr>
-                                        <th>2</th>
-                                        <td>Hart Hagerty</td>
-                                        <td>Desktop Support Technician</td>
-                                        <td>Purple</td>
-                                    </tr>
-                                    <!-- row 3 -->
-                                    <tr>
-                                        <th>3</th>
-                                        <td>Brice Swyre</td>
-                                        <td>Tax Accountant</td>
-                                        <td>Red</td>
+                                        <td class="text-center">
+                                            <input type="checkbox" class="toggle" checked="checked" />
+                                        </td>
+                                        <td>
+                                            <div class="flex flex-row justify-center gap-2">
+                                                <button class="btn">
+                                                    <svg id='Edit_Write_2_20' width='20' height='20' viewBox='0 0 20 20'
+                                                        xmlns='http://www.w3.org/2000/svg'
+                                                        xmlns:xlink='http://www.w3.org/1999/xlink'>
+                                                        <rect width='20' height='20' stroke='none' fill='#000000'
+                                                            opacity='0' />
+
+
+                                                        <g transform="matrix(1.14 0 0 1.14 10 10)">
+                                                            <g style="">
+                                                                <g transform="matrix(1 0 0 1 2 -1.98)">
+                                                                    <path
+                                                                        style="stroke: rgb(0,0,0); stroke-width: 1; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;"
+                                                                        transform=" translate(-9, -5.02)"
+                                                                        d="M 7.5 9 L 4.5 9.54 L 5 6.5 L 10.73 0.79 C 10.917766599905557 0.6006873491769036 11.173362463629442 0.49420167565833006 11.440000000000001 0.49420167565833006 C 11.70663753637056 0.49420167565833006 11.962233400094444 0.6006873491769037 12.15 0.7900000000000001 L 13.21 1.85 C 13.399312650823097 2.037766599905556 13.50579832434167 2.2933624636294416 13.50579832434167 2.5599999999999996 C 13.50579832434167 2.826637536370558 13.399312650823097 3.0822334000944442 13.21 3.2700000000000005 Z"
+                                                                        stroke-linecap="round" />
+                                                                </g>
+                                                                <g transform="matrix(1 0 0 1 -0.75 0.75)">
+                                                                    <path
+                                                                        style="stroke: rgb(0,0,0); stroke-width: 1; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;"
+                                                                        transform=" translate(-6.25, -7.75)"
+                                                                        d="M 12 9.5 L 12 12.5 C 12 13.052284749830793 11.552284749830793 13.5 11 13.5 L 1.5 13.5 C 0.9477152501692065 13.5 0.5 13.052284749830793 0.5 12.5 L 0.5 3 C 0.5 2.4477152501692068 0.9477152501692065 2 1.5 2 L 4.5 2"
+                                                                        stroke-linecap="round" />
+                                                                </g>
+                                                            </g>
+                                                        </g>
+                                                    </svg>
+                                                </button>
+                                                <button class="btn">
+                                                    <svg id='Trash_20' width='20' height='20' viewBox='0 0 20 20'
+                                                        xmlns='http://www.w3.org/2000/svg'
+                                                        xmlns:xlink='http://www.w3.org/1999/xlink'>
+                                                        <rect width='20' height='20' stroke='none' fill='#000000'
+                                                            opacity='0' />
+
+
+                                                        <g transform="matrix(0.8 0 0 0.8 10 10)">
+                                                            <path
+                                                                style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;"
+                                                                transform=" translate(-12, -12)"
+                                                                d="M 10 2 L 9 3 L 4 3 L 4 5 L 20 5 L 20 3 L 15 3 L 14 2 L 10 2 z M 5 7 L 5 20 C 5 21.1 5.9 22 7 22 L 17 22 C 18.1 22 19 21.1 19 20 L 19 7 L 5 7 z M 8 9 L 10 9 L 10 20 L 8 20 L 8 9 z M 14 9 L 16 9 L 16 20 L 14 20 L 14 9 z"
+                                                                stroke-linecap="round" />
+                                                        </g>
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>

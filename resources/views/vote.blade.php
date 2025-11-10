@@ -25,7 +25,7 @@
                                         <th>Survey Name</th>
                                         <th>Description</th>
                                         <th>You Voted</th>
-                                        <th>Action</th>
+                                        <th class="w-32 text-center">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -34,7 +34,11 @@
                                         <td>1</td>
                                         <td>Cy Ganderton</td>
                                         <td>Quality Control Specialist</td>
-                                        <td><button class="btn" onclick="vote_modal.showModal()">Vote</button></td>
+                                        <td>
+                                            <div class="flex justify-center">
+                                                <button class="btn" onclick="vote_modal.showModal()">Vote</button>
+                                            </div>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
