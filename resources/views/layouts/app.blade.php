@@ -50,8 +50,9 @@
         </main>
 
 
-        @stack('js')
     </div>
+    @stack('js')
 </body>
+
 
 </html>

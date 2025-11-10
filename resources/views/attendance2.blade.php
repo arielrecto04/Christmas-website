@@ -1,18 +1,23 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Vote') }}
+            {{ __('Attendance') }}
         </h2>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 flex flex-col gap-2">
             <div class="bg-white rounded-lg shadow-lg flex flex-col gap-2">
-                <div>
+                <div class="flex flex-row">
                     <div class="join">
                         <a href="{{ route('christmas.index') }}" class="btn join-item">Surveys</a>
                         <a href="{{ route('christmas.attendance') }}" class="btn join-item">Attendance</a>
                         <a href="{{ route('christmas.vote') }}" class="btn join-item">Vote</a>
+                    </div>
+                </div>
+                <div>
+                    <div class="w-[20rem] aspect-square" x-data="timeIn">
+                        <x-clock />
                     </div>
                 </div>
             </div>
