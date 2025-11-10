@@ -32,9 +32,9 @@ class DatabaseSeeder extends Seeder
         }
 
         $employee = User::create([
-            'name' => 'admin',
-            'email' => 'admin@admin.com',
-            'password' => Hash::make('admin123')
+            'name' => 'employee',
+            'email' => 'employee@employee.com',
+            'password' => Hash::make('employee123')
         ]);
 
         Ticket::create([
@@ -104,13 +104,16 @@ class DatabaseSeeder extends Seeder
         collect($employees)->map(function($employee){
             $user = User::create([
                 'name' => $employee,
-                'slug' => Str::slug($employee),
                 'email' => Str::slug($employee) . '@gmail.com',
                 'password' => Hash::make('password'),
-                'ticket_number' => 'TICKET-' . str_pad(mt_rand(0, 9999), 4, '0', STR_PAD_LEFT),
             ]);
 
             $user->roles()->attach(Role::where('name', 'employee')->first()->id);
+
+            Ticket::create([
+                'user_id' => $user->id,
+                'ticket_number' => Ticket::generateTicketNumber()
+            ]);
 
             Attendance::create([
                 'user_id' => $user->id,
