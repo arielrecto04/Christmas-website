@@ -26,7 +26,8 @@
 
 <body class="bg-gray-100 relative h-auto w-full">
 
-    {{-- <x-size /> --}}
+    {{--
+    <x-size /> --}}
 
     <div class="flex flex-col gap-2 w-full max-w-screen overflow-hidden h-auto">
         <div class="flex items-center shadow-lg bg-red-500 opacity-95 p-5 justify-between sticky top-0 z-30"
@@ -34,8 +35,7 @@
             <div class="flex items-center relative" x-init="loadAudio(`{{ asset('song.mp3') }}`)">
                 <a href="/" class="text-sm md:text-base lg:text-3xl font-bold text-white flex items-center gap-5">
                     <span>
-                        <img src="{{ asset('images/2.png') }}" alt="" srcset=""
-                            class="w-14 lg:w-12 aspect-square">
+                        <img src="{{ asset('images/2.png') }}" alt="" srcset="" class="w-14 lg:w-12 aspect-square">
                     </span> <span>
                         Innovato Christmas Party</span>
                 </a>
@@ -96,8 +96,7 @@
             </div>
         </div>
 
-        <img src="{{ asset('images/snow.gif') }}" alt="" srcset=""
-            class="w-screen h-screen absolute z-15 top-0">
+        <img src="{{ asset('images/snow.gif') }}" alt="" srcset="" class="w-screen h-screen absolute z-15 top-0">
     </div>
 
 </body>

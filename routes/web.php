@@ -43,14 +43,18 @@ Route::middleware('auth')->group(function () {
     Route::resource('users', UserController::class);
 
 
-    Route::prefix('survey')->name('survey.')->group(function () {
-        Route::get('/', function () {
+    Route::prefix('christmas')->name('christmas.')->group(function () {
+        Route::get('/survey', function () {
             return view('survey');
-        })->name('index'); // This becomes route name: survey.index
+        })->name('index');
 
         Route::get('/vote', function () {
             return view('vote');
-        })->name('vote'); // This becomes route name: survey.vote
+        })->name('vote');
+
+        Route::get('/attendance', function () {
+            return view('attendance2');
+        })->name('attendance');
     });
 });
 

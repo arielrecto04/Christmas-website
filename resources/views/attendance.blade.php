@@ -19,8 +19,9 @@
 
         {{-- <div class="flex flex-col gap-2">
             <label for="" class="text-gray-400">Arrival Time</label> --}}
-        <input x-ref="timeContainer" type="hidden" name="arrival_date" class="input border-red-500">
-        {{-- </div> --}}
+            <input x-ref="timeContainer" type="hidden" name="arrival_date" class="input border-red-500">
+            {{--
+        </div> --}}
 
 
         <input type="hidden" name="selected_user" x-model="JSON.stringify(selectedUser)">
@@ -30,9 +31,9 @@
 
             <div class="flex flex-col gap-3 p-5">
                 @if (Session::has('error'))
-                    <p class="text-xs text-error">
-                        {{ Session::get('error') }}
-                    </p>
+                <p class="text-xs text-error">
+                    {{ Session::get('error') }}
+                </p>
                 @endif
 
                 <p x-text="error?.hasAttendance" class="text-xs text-error">
@@ -54,15 +55,16 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 grid-flow-row items-center gap-2 w-full p-5">
                 <div class="relative group" x-show="!selectedUser">
-                    <button @click="toggleDropdown" type="button"
-                        class="inline-flex justify-center w-full
+                    <button @click="toggleDropdown" type="button" class="inline-flex justify-center w-full
                          px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-red-500 
                          rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2
                           focus:ring-offset-gray-100 focus:ring-blue-500">
 
 
-                        <span class="mr-2 text-red-500 text-sm md:text-base lg:text-xl" x-show="!isOpen">Find your name</span>
-                        <span class="mr-2 text-red-500 text-sm md:text-base lg:text-xl" x-show="isOpen">Find your name</span>
+                        <span class="mr-2 text-red-500 text-sm md:text-base lg:text-xl" x-show="!isOpen">Find your
+                            name</span>
+                        <span class="mr-2 text-red-500 text-sm md:text-base lg:text-xl" x-show="isOpen">Find your
+                            name</span>
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 ml-2 -mr-1" viewBox="0 0 20 20"
                             fill="currentColor" aria-hidden="true">
                             <path fill-rule="evenodd"
@@ -70,8 +72,7 @@
                                 clip-rule="evenodd" />
                         </svg>
                     </button>
-                    <div x-show="isOpen" x-init=" loadUsers({{ json_encode($users) }})"
-                        class="absolute rigth-0 mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5
+                    <div x-show="isOpen" x-init=" loadUsers({{ json_encode($users) }})" class="absolute rigth-0 mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5
                         w-full p-1 space-y-1 overflow-y-auto max-h-44">
                         <!-- Search input -->
                         <input id="search-input"
@@ -80,8 +81,7 @@
                         <!-- Dropdown content goes here -->
                         <template x-if="!search">
                             <template x-for="user in users">
-                                <button type="button" @click="pickUser(user)"
-                                    class="block px-4 py-2 text-gray-700 hover:bg-gray-100 
+                                <button type="button" @click="pickUser(user)" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 
                                      w-full active:bg-blue-100 cursor-pointer rounded-md">
                                     <span x-text="user.name"></span>
                                 </button>
@@ -121,8 +121,8 @@
     </form>
 
     @push('js')
-        <script>
-            const timeIn = () => ({
+    <script>
+        const timeIn = () => ({
                 initTime: null,
                 users: [],
                 search: null,
@@ -180,6 +180,6 @@
                     // this.results = []
                 }
             })
-        </script>
+    </script>
     @endpush
 </x-landing>
