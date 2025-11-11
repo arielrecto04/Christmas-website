@@ -11,7 +11,9 @@ class SurveyController extends Controller
 {
     public function index()
     {
-        return view('survey');
+        $surveys = Survey::orderBy('name', 'asc')
+                      ->paginate(10);
+        return view('survey', compact('surveys'));
     }
 
     public function store(Request $request)
@@ -19,14 +21,13 @@ class SurveyController extends Controller
         $attribute = $request->validate([
             'name' => 'required',
             'description' => 'nullable',
-            'year' => 'required'
         ]);
 
         Survey::create([
             'name' => $attribute['name'],
             'description' => $attribute['description'] ?? null,
-            'is_active' => true,
-            'year' => Carbon::now()->year,
+            'is_active' => $request->has('is_active') ? 1 : 0,
+            'year' => date('Y'),
         ]);
 
         return redirect()->route('survey')->with(['message' => 'Survey created successfully']);

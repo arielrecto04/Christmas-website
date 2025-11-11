@@ -30,12 +30,13 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <!-- row 1 -->
+                                    @forelse ($surveys as $survey)
                                     <tr>
-                                        <th>1</th>
-                                        <td>Cy Ganderton</td>
+                                        <td>{{ $survey->name }}</td>
+                                        <td>{{ $survey->description }}</td>
                                         <td class="text-center">
-                                            <input type="checkbox" class="toggle" checked="checked" />
+                                            <input type="checkbox" class="toggle" {{ $survey->is_active ? 'checked' :
+                                            ''}}/>
                                         </td>
                                         <td>
                                             <div class="flex flex-row justify-center gap-2">
@@ -87,6 +88,13 @@
                                             </div>
                                         </td>
                                     </tr>
+                                    @empty
+                                    <tr>
+                                        <td colspan="4" class="text-center text-gray-500">
+                                            No surveys available.
+                                        </td>
+                                    </tr>
+                                    @endforelse
                                 </tbody>
                             </table>
                         </div>
@@ -129,7 +137,6 @@
                     </div>
                 </div>
                 <div class="modal-action">
-                    <!-- if there is a button in form, it will close the modal -->
                     <button type="button" class="btn" @click="$refs.addSurveyModal.close()">Close</button>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
