@@ -45,9 +45,7 @@ Route::middleware('auth')->group(function () {
 
 
     Route::prefix('christmas')->name('christmas.')->group(function () {
-        Route::get('/survey', function () {
-            return view('survey');
-        })->name('index');
+        Route::get('/survey', [SurveyController::class, 'index'])->name('index');
 
         Route::get('/vote', function () {
             return view('vote');

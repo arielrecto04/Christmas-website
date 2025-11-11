@@ -10,7 +10,7 @@ class Survey extends Model
         'name',
         'description',
         'is_active',
-        'date_year',
+        'year',
     ];
 
     public function votes()
