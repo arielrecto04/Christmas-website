@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Survey;
 use App\Models\Attendance;
-use Illuminate\Http\Request;
+use App\Models\Survey;
 use App\Models\CandidateVote;
 use App\Models\SurveyCandidate;
+use Illuminate\Http\Request;
 
 class CandidateVoteController extends Controller
 {
@@ -15,28 +15,9 @@ class CandidateVoteController extends Controller
      */
     public function index()
     {
-        $user_id = auth()->id();
-        
-        $attendees = Attendance::with('user')
-        ->join('users', 'attendances.user_id', '=', 'users.id')
-        ->orderBy('users.name')
-        ->select('attendances.*')
-        ->get();
+        $surveys = Survey::get();
 
-        $surveys = Survey::with(['candidates.votes' => function ($query) use ($user_id) {
-            $query->where('user_id', $user_id);
-        }, 'candidates.user'])->paginate(10);
-        
-        $surveys->getCollection()->transform(function ($survey) {
-            $voteCandidate = $survey->candidates->first(function ($candidate) {
-                return $candidate->votes->isNotEmpty();
-            });
-
-            $survey->voted_candidate_name = $voteCandidate?->user?->name ?? 'Not Yet Voted';
-            return $survey;
-        });
-
-        return view('vote', compact('surveys', 'attendees'));
+        return view('vote', compact('surveys'));
     }
 
     /**
@@ -44,35 +25,38 @@ class CandidateVoteController extends Controller
      */
     public function create(Request $request)
     {
-        $request->validate([
-            ''
-        ]);
+
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
-        $validated = $request->validate([
-            'survey_id' => 'required|exists:surveys,id',
-            'candidate_id' => 'required|exists:users,id',
+
+        $user = auth()->user();
+
+
+        $candidateUser = SurveyCandidate::find($id);
+
+
+        $alreadyVoted = CandidateVote::where('user_id', $user->id)
+            ->where('candidate_id', $candidateUser->id)
+            ->exists();
+
+        if ($alreadyVoted) {
+            return back()->with('error', 'You have already voted for this candidate.');
+        }
+
+        $vote = CandidateVote::create([
+            'user_id' => $user->id,
+            'survey_candidate_id' => $candidateUser->id, 
         ]);
 
-        $surveyCandidate = SurveyCandidate::firstOrCreate(
-            [
-                'survey_id' => $validated['survey_id'],
-                'user_id' => $validated['candidate_id'],
-            ]
-        );
-
-        CandidateVote::create([
-               'survey_candidate_id' => $surveyCandidate->id,
-               'user_id' => auth()->id(),
-           ]);
-           
-        return redirect()->back()->with('success', 'Vote submitted successfully!');
+    
+        return back()->with('message', "You voted for {$candidateUser->user->name}");
     }
+
 
     /**
      * Display the specified resource.
