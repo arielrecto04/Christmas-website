@@ -5,96 +5,111 @@
         </h2>
     </x-slot>
 
-    <div x-data="{ surveyName: '', surveyId: '', openVoteModal() { this.$refs.voteModal.showModal(); } }">
-        <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 flex flex-col gap-2">
-                <x-container>
-                    <div class="flex flex-col gap-6">
-                        <div class="flex flex-row justify-between">
-                            <div class="join">
-                                <a href="{{ route('christmas.survey') }}" class="btn join-item">Surveys</a>
-                                <a href="{{ route('christmas.attendance') }}" class="btn join-item">Attendance</a>
-                                <a href="{{ route('christmas.vote') }}" class="btn join-item">Vote</a>
-                            </div>
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 flex flex-col gap-2">
+            <x-container>
+                <div class="flex flex-col gap-6">
+                    <div class="flex flex-row justify-between">
+                        <div class="join">
+                            <a href="{{ route('christmas.survey') }}" class="btn join-item">Surveys</a>
+                            <a href="{{ route('christmas.attendance') }}" class="btn join-item">Attendance</a>
+                            <a href="{{ route('christmas.vote') }}" class="btn join-item">Vote</a>
                         </div>
-                        <div class="flex flex-col gap-2">
-                            <div class="overflow-x-auto">
-                                <table class="table">
-                                    <!-- head -->
-                                    <thead>
-                                        <tr>
-                                            <th>Survey Name</th>
-                                            <th>Description</th>
-                                            <th>Year</th>
-                                            <th>You Voted</th>
-                                            <th class="w-32 text-center">Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @forelse ($surveys as $survey)
-                                        <tr>
-                                            <td>{{ $survey->name }}</td>
-                                            <td>{{ $survey->description }}</td>
-                                            <td>{{ $survey->year }}</td>
-                                            <td
-                                                class="{{ $survey->voted_candidate_name === 'Not Yet Voted' ? 'text-gray-500' : '' }}">
-                                                {{ $survey->voted_candidate_name }}</td>
-                                            <td>
-                                                <div class="flex justify-center">
-                                                    <button
-                                                        class="btn {{ $survey->voted_candidate_name !== 'Not Yet Voted' ? 'btn-disabled' : '' }}"
-                                                        @click="surveyName = '{{ $survey->name }} {{ $survey->year }}'; surveyId = '{{ $survey->id }}'; openVoteModal()">
+                    </div>
+                    <div>
+                        <div class="overflow-x-auto">
+                            <table class="table">
+                                <!-- head -->
+                                <thead>
+                                    <tr>
+                                        <th>Survey Name</th>
+                                        <th>Description</th>
+                                        <th>Year</th>
+                                        <th>You Voted</th>
+                                        <th class="w-32 text-center">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    @foreach ($surveys as $survey)
+
+                                   
+                                    <tr>
+                                        <td>{{ $survey->id }}</td>
+                                        <td>{{ $survey->name }}</td>
+                                        <td>{{ $survey->year }}</td>
+                                        <td>{{ $survey->candidates()->whereHas('votes', function($q){
+                                        $q->where('user_id', auth()->user()->id);
+                                        })->latest()->first()->name ?? 'You did not vote yet.' }}</td>
+                                        <td>
+                                           
+                                       
+                                            <div class="flex justify-center">
+                                                @if($survey->candidates()->whereHas('votes', function($q){
+                                                $q->where('user_id', auth()->id());
+                                                })->exists())
+                                                    <button class="btn" disabled>
+                                                        Already Voted
+                                                    </button>
+                                                @else
+                                                    <button class="btn"  onclick="vote_modal_{{ $survey->id }}.showModal()">
                                                         Vote
                                                     </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        @empty
-                                        <tr>
-                                            <td colspan="5" class="text-center text-gray-500">
-                                                No surveys available.
-                                            </td>
-                                        </tr>
-                                        @endforelse
-                                    </tbody>
-                                </table>
-                            </div>
-                            {{ $surveys->links() }}
+                                                @endif
+
+                                                
+                                                <dialog x-data x-ref="voteModal" id="vote_modal_{{ $survey->id }}" class="modal">
+                                                    <div class="modal-box">
+                                                        <div class="flex items-center justify-between gap-2">
+                                                            <h3 class="text-lg font-bold mb-8">Vote</h3>
+
+                                                            <form method="dialog">
+                                                                <button class="btn btn-sm">Close</button>
+                                                            </form>
+
+
+
+                                                            <div class="grid grid-cols-3 grid-flow-row gap-2">
+
+                                                                @forelse ($survey->candidates as $candidate)
+                                                                <div class="flex flex-col gap-2 rounded-lg border-2 border-gray-500 p-5">
+                                                                    <h1>{{ $candidate->user->name }}</h1>
+
+                                                                    <p class="font-bold"># {{ $candidate->id }}</p>
+
+                                                                    <form action="{{ route('christmas.vote.store', ['candidate_id' => $candidate->id]) }}" method="POST">
+                                                                        @csrf
+
+                                                                        <button class="btn btn-sm">Vote</button>
+                                                                    </form>
+
+                                                                </div>
+
+                                                                @empty
+                                                                <div class="w-full p-5 rounded-lg shadow-lg bg-gray-50 flex items-center justify-center">
+                                                                    <h1 class="text-xl font-bold capitalize">No Candidate</h1>
+                                                                </div>
+
+                                                                @endforelse
+                                                            </div>
+
+
+
+                                                        </div>
+                                                </dialog>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    @endforeach
+
+
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-                </x-container>
-            </div>
+                </div>
+            </x-container>
         </div>
-        <dialog x-ref="voteModal" id="vote_modal" class="modal">
-            <div class="modal-box">
-                <h3 class="text-lg font-bold mb-8">Vote</h3>
-                <form method="POST" action="{{ route('vote.store') }}">
-                    @csrf
-
-                    <input type="hidden" name="survey_id" :value="surveyId" />
-
-                    <div class="flex flex-col gap-6">
-                        <div class="flex flex-col gap-2">
-                            <label for="survey" class="label-text font-semibold">Survey Type</label>
-                            <input type="text" :value="surveyName" class="input input-bordered w-full" disabled />
-                        </div>
-
-                        <div class="flex flex-col gap-2">
-                            <label for="candidates" class="label-text font-semibold">Candidates</label>
-                            <select class="select select-bordered w-full" id="candidates" name="candidate_id">
-                                <option selected disabled>Select a user</option>
-                                @foreach($attendees as $attendance)
-                                <option value="{{ $attendance->user->id }}">{{ $attendance->user->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <div class="modal-action">
-                        <button type="button" class="btn" @click="$refs.voteModal.close()">Close</button>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
-                </form>
-            </div>
-        </dialog>
     </div>
 </x-app-layout>
