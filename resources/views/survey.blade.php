@@ -17,10 +17,9 @@
                         </div>
                         <button class="btn" onclick="add_survey_modal.showModal()">Add Survey</button>
                     </div>
-                    <div>
+                    <div class="flex flex-col gap-2">
                         <div class="overflow-x-auto">
                             <table class="table">
-                                <!-- head -->
                                 <thead>
                                     <tr>
                                         <th>Survey Name</th>
@@ -98,6 +97,7 @@
                                 </tbody>
                             </table>
                         </div>
+                        {{ $surveys->links() }}
                     </div>
                 </div>
             </x-container>

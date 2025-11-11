@@ -24,6 +24,7 @@
                                     <tr>
                                         <th>Survey Name</th>
                                         <th>Description</th>
+                                        <th>Year</th>
                                         <th>You Voted</th>
                                         <th class="w-32 text-center">Action</th>
                                     </tr>
@@ -33,6 +34,7 @@
                                     <tr>
                                         <td>1</td>
                                         <td>Cy Ganderton</td>
+                                        <td>Quality Control Specialist</td>
                                         <td>Quality Control Specialist</td>
                                         <td>
                                             <div class="flex justify-center">
@@ -48,7 +50,7 @@
             </x-container>
         </div>
     </div>
-    <dialog id="vote_modal" class="modal">
+    <dialog x-data x-ref="voteModal" id="vote_modal" class="modal">
         <div class="modal-box">
             <h3 class="text-lg font-bold mb-8">Vote</h3>
             <form action="POST" method="{{ route('survey.store') }}">
@@ -63,10 +65,7 @@
                     </select>
                 </div>
                 <div class="modal-action">
-                    <form method="dialog">
-                        <!-- if there is a button in form, it will close the modal -->
-                        <button class="btn">Close</button>
-                    </form>
+                    <button type="button" class="btn" @click="$refs.voteModal.close()">Close</button>
                 </div>
             </form>
         </div>
