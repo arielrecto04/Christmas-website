@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\Employee;
 use App\Models\Attendance;
+use App\Models\Survey;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;

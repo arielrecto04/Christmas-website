@@ -34,19 +34,14 @@ class CandidateVoteController extends Controller
      */
     public function store(Request $request, $id)
     {
-
-
         $user = auth()->user();
 
-
-
-
-
-
+        if(!$user->attendance) {
+            dump('attendance error');
+            return back()->with('error', 'You must submit attendance before voting.');
+        }
 
         $candidateUser = SurveyCandidate::find($id);
-
-
 
         $alreadyVoted = CandidateVote::where('user_id', $user->id)
             ->where('candidate_id', $candidateUser->id)
@@ -56,7 +51,7 @@ class CandidateVoteController extends Controller
             return back()->with('error', 'You have already voted for this candidate.');
         }
 
-        $vote = CandidateVote::create([
+        CandidateVote::create([
             'user_id' => $user->id,
             'survey_candidate_id' => $candidateUser->id,
         ]);

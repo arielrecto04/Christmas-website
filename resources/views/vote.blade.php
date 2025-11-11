@@ -35,8 +35,6 @@
                                                 })->latest()->first()->user->name ?? 'You did not vote yet.' }}
                                             </td>
                                             <td>
-
-
                                                 <div class="flex justify-center">
                                                     @if (
                                                     $survey->candidates()->whereHas('votes', function ($q) {
@@ -65,7 +63,6 @@
 
                                                             </div>
                                                             <div class="grid grid-cols-3 grid-flow-row gap-2">
-
                                                                 @forelse ($survey->candidates as $candidate)
                                                                     <div
                                                                         class="flex flex-col gap-2 p-5 rounded-lg border-2 border-gray-500">
@@ -96,7 +93,7 @@
                                                 </div>
                                             </td>
                                         </tr>
-                                    @endforeach
+                                        @endforeach
                                 </tbody>
                             </table>
                         </div>
