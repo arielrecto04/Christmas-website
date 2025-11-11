@@ -16,6 +16,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/disco-theme', function () {
+    return view('disco-theme');
+});
+
 
 Route::prefix('attendance')->as('attendance.')->group(function () {
     Route::get('', [AttendanceController::class, 'index'])->name('index');
@@ -27,14 +31,14 @@ Route::prefix('attendance')->as('attendance.')->group(function () {
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('users', UserController::class);
-
     Route::get('print-ticket', function () {
         $users = User::get();
 
         return view('ticket', compact('users'));
     })->name('print-ticket');
-
-
+    Route::prefix('attendance')->as('attendance.')->group(function () {
+        Route::delete('{attendance}', [AttendanceController::class, 'destroy'])->name('destroy');
+    });
 });
 
 Route::middleware('auth')->group(function () {
@@ -42,12 +46,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::prefix('attendance')->as('attendance.')->group(function () {
-        Route::delete('{attendance}', [AttendanceController::class, 'destroy'])->name('destroy');
-    });
-
     Route::resource('surveys', SurveyController::class);
-
 
     Route::prefix('christmas')->name('christmas.')->group(function () {
         Route::get('/survey', [SurveyController::class, 'index'])->name('survey');
