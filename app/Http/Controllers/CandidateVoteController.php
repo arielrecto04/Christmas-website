@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Survey;
+use App\Models\Attendance;
 use Illuminate\Http\Request;
 use App\Models\CandidateVote;
 
@@ -14,6 +15,7 @@ class CandidateVoteController extends Controller
     public function index()
     {
         $user_id = auth()->id();
+        $attendees = Attendance::with('user')->get();
 
         $surveys = Survey::with(['candidates.votes' => function ($query) use ($user_id) {
             $query->where('user_id', $user_id);
@@ -28,7 +30,7 @@ class CandidateVoteController extends Controller
             return $survey;
         });
 
-        return view('vote', compact('surveys'));
+        return view('vote', compact('surveys', 'attendees'));
     }
 
     /**

@@ -67,9 +67,10 @@
                 <div class="flex flex-col gap-2">
                     <label for="candidates">Candidates</label>
                     <select class="select select-bordered w-full" id="candidates">
-                        <option selected>Who shot first?</option>
-                        <option>Han Solo</option>
-                        <option>Greedo</option>
+                        <option selected disabled>Select a user</option>
+                        @foreach($attendees as $attendance)
+                        <option value="{{ $attendance->user->id }}">{{ $attendance->user->name }}</option>
+                        @endforeach
                     </select>
                 </div>
                 <div class="modal-action">
