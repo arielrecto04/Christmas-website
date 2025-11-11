@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Survey extends Model
@@ -12,6 +13,11 @@ class Survey extends Model
         'is_active',
         'date_year',
     ];
+
+    public function getYear()
+    {
+        return Carbon::now()->year;
+    }
 
     public function votes()
     {

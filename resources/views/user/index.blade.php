@@ -16,15 +16,23 @@
                         <h1 class="text-lg font-bold gap-2">
                             Users
                         </h1>
-                        <div class="flex items-center gap-2" x-data="{
-                            tooltipID : null,
-                        }">
-                            <div class="tooltip tooltip-close tooltip-left" data-tip="Print Ticket">
-                                <a href="{{route('print-ticket')}}" class="btn" >
-                                    <i class="fi fi-rr-print"></i>
-                                </a>
-                              </div>
+                        <div class="flex gap-2 items-center">
+                            <a href="{{ route('users.create') }}">
+                                <x-primary-button>
+                                    Add User
+                                </x-primary-button>
+                            </a>
+                            <div class="flex items-center gap-2" x-data="{
+                                tooltipID : null,
+                            }">
+                                <div class="tooltip tooltip-close tooltip-left" data-tip="Print Ticket">
+                                    <a href="{{route('print-ticket')}}" class="btn" >
+                                        <i class="fi fi-rr-print"></i>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
+
                     </div>
 
                     <table class="table">
@@ -36,7 +44,7 @@
                                 <th>Role</th>
                                 <th>Ticket Number</th>
                                 <th>Attendance</th>
-
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -62,6 +70,17 @@
                                         @else
                                             <span class="text-gray-400">No Attendance</span>
                                         @endif
+                                    </td>
+                                    <td>
+                                        @can('update', $user)
+                                        <a href="{{ route('users.show', $user->id) }}" class="btn btn-sm btn-danger">
+                                            Edit
+                                        </a>
+                                        <a href="{{ route('users.show', $user->id) }}" class="btn btn-sm btn-info">
+                                            Delete
+                                        </a>
+                                        @endcan
+                                    </td>
                                 </tr>
 
                             @empty

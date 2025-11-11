@@ -2,7 +2,7 @@
     <div class="flex flex-col gap-2">
         <div class="bg-white rounded-lg shadow-lg p-5 flex flex-col lg:flex-row items-center gap-5 w-full lg:min-w-[30rem] lg:max-w-[60rem]">
             <div class="w-full lg:w-auto rounded-lg p-5 lg:p-2 rounded-lg flex item-center bg-red-500 text-white font-bold">
-                {{ $user->ticket_number }}
+                {{ $user->ticket->ticket_number }}
             </div>
 
 

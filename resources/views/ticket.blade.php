@@ -14,9 +14,9 @@
                 </div>
 
                 <div class="grid grid-cols-4 grid-flow-row gap-5">
-                    @foreach ($usersTicket as $ticket)
+                    @foreach ($users as $user)
                         <p class="p-5 rounded-lg border">
-                            {{$ticket->ticket_number}}
+                            {{ $user->ticket->ticket_number }}
                         </p>
                     @endforeach
                 </div>
