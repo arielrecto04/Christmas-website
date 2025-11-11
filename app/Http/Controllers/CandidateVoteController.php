@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CandidateVote;
+use App\Models\Survey;
 use Illuminate\Http\Request;
+use App\Models\CandidateVote;
 
 class CandidateVoteController extends Controller
 {
@@ -12,7 +13,22 @@ class CandidateVoteController extends Controller
      */
     public function index()
     {
-        return view('vote');
+        $user_id = auth()->id();
+
+        $surveys = Survey::with(['candidates.votes' => function ($query) use ($user_id) {
+            $query->where('user_id', $user_id);
+        }, 'candidates.user'])->paginate(10);
+        
+        $surveys->getCollection()->transform(function ($survey) {
+            $voteCandidate = $survey->candidates->first(function ($candidate) {
+                return $candidate->votes->isNotEmpty();
+            });
+
+            $survey->voted_candidate_name = $voteCandidate?->user?->name ?? 'Not Yet Voted';
+            return $survey;
+        });
+
+        return view('vote', compact('surveys'));
     }
 
     /**

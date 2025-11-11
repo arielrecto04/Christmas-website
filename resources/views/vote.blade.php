@@ -16,7 +16,7 @@
                             <a href="{{ route('christmas.vote') }}" class="btn join-item">Vote</a>
                         </div>
                     </div>
-                    <div>
+                    <div class="flex flex-col gap-2">
                         <div class="overflow-x-auto">
                             <table class="table">
                                 <!-- head -->
@@ -30,21 +30,29 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <!-- row 1 -->
+                                    @forelse ($surveys as $survey)
                                     <tr>
-                                        <td>1</td>
-                                        <td>Cy Ganderton</td>
-                                        <td>Quality Control Specialist</td>
-                                        <td>Quality Control Specialist</td>
+                                        <td>{{ $survey->name }}</td>
+                                        <td>{{ $survey->description }}</td>
+                                        <td>{{ $survey->year }}</td>
+                                        <td>{{ $survey->voted_candidate_name }}</td>
                                         <td>
                                             <div class="flex justify-center">
                                                 <button class="btn" onclick="vote_modal.showModal()">Vote</button>
                                             </div>
                                         </td>
                                     </tr>
+                                    @empty
+                                    <tr>
+                                        <td colspan="5" class="text-center text-gray-500">
+                                            No surveys available.
+                                        </td>
+                                    </tr>
+                                    @endforelse
                                 </tbody>
                             </table>
                         </div>
+                        {{ $surveys->links() }}
                     </div>
                 </div>
             </x-container>
@@ -53,7 +61,7 @@
     <dialog x-data x-ref="voteModal" id="vote_modal" class="modal">
         <div class="modal-box">
             <h3 class="text-lg font-bold mb-8">Vote</h3>
-            <form action="POST" method="{{ route('survey.store') }}">
+            <form method="POST" action="{{ route('survey.store') }}">
                 @csrf
 
                 <div class="flex flex-col gap-2">
