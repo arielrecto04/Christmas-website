@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Survey;
 use Illuminate\Http\Request;
-use App\Http\Resources\SurveyResource;
 
 class SurveyController extends Controller
 {
@@ -12,7 +11,6 @@ class SurveyController extends Controller
     {
         $surveys = Survey::orderBy('name', 'asc')
                       ->paginate(10);
-        $surveys = SurveyResource::collection($surveys);
         return view('survey', compact('surveys'));
     }
 
