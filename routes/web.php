@@ -53,6 +53,7 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::post('/survey', [SurveyController::class, 'store'])->name('survey.store');
+    Route::post('/vote', [CandidateVoteController::class, 'store'])->name('vote.store');
 });
 
 require __DIR__ . '/auth.php';

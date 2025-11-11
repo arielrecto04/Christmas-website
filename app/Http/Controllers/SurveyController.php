@@ -30,7 +30,7 @@ class SurveyController extends Controller
             'year' => date('Y'),
         ]);
 
-        return redirect()->route('survey')->with(['message' => 'Survey created successfully']);
+        return redirect()->route('christmas.survey')->with(['message' => 'Survey created successfully']);
     }
 
 
