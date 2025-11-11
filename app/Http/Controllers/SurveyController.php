@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Survey;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -23,12 +24,20 @@ class SurveyController extends Controller
             'description' => 'nullable',
         ]);
 
-        Survey::create([
+        $survey = Survey::create([
             'name' => $attribute['name'],
             'description' => $attribute['description'] ?? null,
             'is_active' => $request->has('is_active') ? 1 : 0,
             'year' => date('Y'),
         ]);
+
+        $candidates = User::has('attendance')->get();
+
+        foreach ($candidates as $candidate) {
+            $survey->candidates()->create([
+                'user_id' => $candidate->id,
+            ]);
+        }
 
         return redirect()->route('christmas.survey')->with(['message' => 'Survey created successfully']);
     }
