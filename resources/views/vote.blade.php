@@ -56,18 +56,17 @@
                                                     <dialog x-data x-ref="voteModal" id="vote_modal_{{ $survey->id }}"
                                                         class="modal">
                                                         <div class="modal-box">
-                                                            <div class="flex gap-2 justify-between items-center">
-                                                                <h3 class="mb-8 text-lg font-bold">Vote</h3>
+                                                            <div class="flex gap-2 mb-8 justify-between items-center">
+                                                                <h3 class="text-lg font-bold">Vote</h3>
 
                                                                 <form method="dialog">
                                                                     <button class="btn btn-sm">Close</button>
                                                                 </form>
 
+                                                            </div>
+                                                            <div class="grid grid-cols-3 grid-flow-row gap-2">
 
-
-                                                                <div class="grid grid-cols-3 grid-flow-row gap-2">
-
-                                                                    @forelse ($survey->candidates as $candidate)
+                                                                @forelse ($survey->candidates as $candidate)
                                                                     <div
                                                                         class="flex flex-col gap-2 p-5 rounded-lg border-2 border-gray-500">
                                                                         <h1>{{ $candidate->user->name }}</h1>
@@ -85,28 +84,21 @@
 
                                                                     </div>
 
-                                                                    @empty
+                                                                @empty
                                                                     <div
                                                                         class="flex justify-center items-center p-5 w-full bg-gray-50 rounded-lg shadow-lg">
                                                                         <h1 class="text-xl font-bold capitalize">No
                                                                             Candidate</h1>
                                                                     </div>
-                                                                    @endforelse
-                                                                </div>
-
-
-
+                                                                @endforelse
                                                             </div>
                                                     </dialog>
                                                 </div>
                                             </td>
                                         </tr>
-                                        @endforeach
-
-
-                                    </tbody>
-                                </table>
-                            </div>
+                                    @endforeach
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </x-container>

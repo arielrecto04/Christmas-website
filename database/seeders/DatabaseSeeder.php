@@ -5,13 +5,11 @@ namespace Database\Seeders;
 use App\Models\Attendance;
 use App\Models\CandidateVote;
 use App\Models\User;
-use App\Models\Employee;
 use App\Models\Role;
 use App\Models\Survey;
 use App\Models\SurveyCandidate;
 use App\Models\Ticket;
 use Carbon\Carbon;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -23,108 +21,100 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        $roles = [
-            'admin',
-            'employee',
-        ];
-
-        foreach($roles as $role) {
+        // Roles
+        $roles = ['admin', 'employee'];
+        foreach ($roles as $role) {
             Role::firstOrCreate(['name' => $role]);
         }
 
-        $employee = User::create([
-            'name' => 'employee',
-            'email' => 'employee@employee.com',
-            'password' => Hash::make('employee123')
-        ]);
-
-        $employee->ticket()->create([
-            'ticket_number' => Ticket::generateTicketNumber()
-        ]);
-        $employee->roles()->attach(Role::where('name', 'employee')->first()->id);
-        $employee->attendance()->create([
-            'arrival_date' => Carbon::now()->format('Y-m-d H:i:s'),
-        ]);
-
+        // Admin user
         $admin = User::create([
             'name' => 'admin',
             'email' => 'admin@admin.com',
-            'password' => Hash::make('admin123')
+            'password' => Hash::make('admin123'),
         ]);
-                
-        $admin->ticket()->create([
-            'ticket_number' => Ticket::generateTicketNumber()
-        ]);
-
+        $admin->ticket()->create(['ticket_number' => Ticket::generateTicketNumber()]);
         $admin->roles()->attach(Role::where('name', 'admin')->first()->id);
 
-        $admin->attendance()->create([
-            'arrival_date' => Carbon::now()->format('Y-m-d H:i:s'),
+        // Employee user (example)
+        $employee = User::create([
+            'name' => 'employee',
+            'email' => 'employee@employee.com',
+            'password' => Hash::make('employee123'),
         ]);
-        
+        $employee->ticket()->create(['ticket_number' => Ticket::generateTicketNumber()]);
+        $employee->roles()->attach(Role::where('name', 'employee')->first()->id);
+
+        // Employees array
         $employees = [
             'Jhaymee Magnawa',
             'Angeline Boton',
-            // 'Dave Giron',
-            // 'Ariel Recto',
-            // 'Steven Vicente',
-            // 'Ryan Marte',
-            // 'Harold Jamisola',
-            // 'Vash Ulric Ancheta',
-            // 'Alethea Teope',
-            // 'Cesar Piñero',
-            // 'Shen Angeles',
-            // 'Ronan Manzanares',
-            // 'Alfer Alviz',
-            // 'Ryan Antiquerra',
-            // 'Vincent Bajenting',
-            // 'John Bañares',
-            // 'Karl Brao',
-            // 'Renzo Contante',
-            // 'Henry Ganal',
-            // 'Harrold Rebana',
-            // 'DJ Supsup',
-            // 'Mhon Perez',
-            // 'Aries Castro',
-            // 'Albert Punzalan',
-            // 'John Den Borja',
-            // 'Anthony Garingalao',
-            // 'Jay Patallano',
-            // 'Andie Hofstetter',
-            // "M'PHD - Patricia H. Depante",
-            // "M'RHD1 - Renee H. Depante",
-            // "M'RHD2 - Regina H. Depante",
+            'Dave Giron',
+            'Ariel Recto',
+            'Steven Vicente',
+            'Ryan Marte',
+            'Harold Jamisola',
+            'Vash Ulric Ancheta',
+            'Alethea Teope',
+            'Cesar Piñero',
+            'Shen Angeles',
+            'Ronan Manzanares',
+            'Alfer Alviz',
+            'Ryan Antiquerra',
+            'Vincent Bajenting',
+            'John Bañares',
+            'Karl Brao',
+            'Renzo Contante',
+            'Henry Ganal',
+            'Harrold Rebana',
+            'DJ Supsup',
+            'Mhon Perez',
+            'Aries Castro',
+            'Albert Punzalan',
+            'John Den Borja',
+            'Anthony Garingalao',
+            'Jay Patallano',
+            'Andie Hofstetter',
+            "M'PHD - Patricia H. Depante",
+            "M'RHD1 - Renee H. Depante",
+            "M'RHD2 - Regina H. Depante",
         ];
 
-        collect($employees)->map(function($employee){
+        $employeeUsers = collect($employees)->map(function ($employeeName) {
             $user = User::create([
-                'name' => $employee,
-                'email' => Str::slug($employee) . '@gmail.com',
+                'name' => $employeeName,
+                'email' => Str::slug($employeeName) . '@gmail.com',
                 'password' => Hash::make('password'),
             ]);
 
             $user->roles()->attach(Role::where('name', 'employee')->first()->id);
-            $user->ticket()->create([
-                'ticket_number' => Ticket::generateTicketNumber()
-            ]);
-            $user->attendance()->create([
-                'arrival_date' => Carbon::now()->format('Y-m-d H:i:s'),
-            ]);
+            $user->ticket()->create(['ticket_number' => Ticket::generateTicketNumber()]);
+            $user->attendance()->create(['arrival_date' => Carbon::now()]);
+
+            return $user; // collect all created users
         });
 
-        $sampleCandidate = $admin;
-
+        // Create Survey
         $survey = Survey::create([
             'name' => 'Best Outfit',
-            'year' => Carbon::now()->year
+            'year' => Carbon::now()->year,
         ]);
-        $candidate = $survey->candidates()->create([
-            'user_id' => $sampleCandidate->id,
+
+        // Add admin as candidate
+        $candidateAdmin = $survey->candidates()->create([
+            'user_id' => $admin->id,
         ]);
-        $employee->votes()->create([
-            'survey_candidate_id' => $candidate->id,
-        ]);
+
+        // Add all employee users as candidates
+        $employeeUsers->each(function ($user) use ($survey) {
+            $survey->candidates()->create(['user_id' => $user->id]);
+        });
+
+        // Give one example vote from first employee
+        if ($employeeUsers->isNotEmpty()) {
+            $employeeUsers->first()->votes()->create([
+                'survey_candidate_id' => $candidateAdmin->id,
+            ]);
+        }
     }
 }
