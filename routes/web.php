@@ -50,13 +50,13 @@ Route::middleware('auth')->group(function () {
         Route::get('/survey', [SurveyController::class, 'index'])->name('survey');
 
         Route::get('/vote', [CandidateVoteController::class, 'index'])->name('vote');
-        Route::post('/vote/{candidate_id}', [CandidateVoteController::class, 'index'])->name('vote.store');
+        Route::post('/vote/{candidate_id}', [CandidateVoteController::class, 'store'])->name('vote.store');
 
         Route::get('/attendance', [AttendanceController::class, 'index'])->name('attendance');
     });
 
     Route::post('/survey', [SurveyController::class, 'store'])->name('survey.store');
-   
+
 });
 
 require __DIR__ . '/auth.php';

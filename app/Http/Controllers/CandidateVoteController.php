@@ -35,13 +35,17 @@ class CandidateVoteController extends Controller
     public function store(Request $request, $id)
     {
 
-        dd($request->all());
 
         $user = auth()->user();
 
 
 
+
+
+
+
         $candidateUser = SurveyCandidate::find($id);
+
 
 
         $alreadyVoted = CandidateVote::where('user_id', $user->id)
@@ -54,7 +58,7 @@ class CandidateVoteController extends Controller
 
         $vote = CandidateVote::create([
             'user_id' => $user->id,
-            'survey_candidate_id' => $candidateUser->id, 
+            'survey_candidate_id' => $candidateUser->id,
         ]);
 
 
