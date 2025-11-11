@@ -16,8 +16,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', [DashboardController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
-
 
 Route::prefix('attendance')->as('attendance.')->group(function () {
     Route::get('', [AttendanceController::class, 'index'])->name('index');
@@ -25,16 +23,10 @@ Route::prefix('attendance')->as('attendance.')->group(function () {
     Route::get('{user}/congrats', [AttendanceController::class, 'congrats'])->name('congrats');
 });
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-
-
-    Route::prefix('attendance')->as('attendance.')->group(function () {
-        Route::delete('{attendance}', [AttendanceController::class, 'destroy'])->name('destroy');
-    });
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::resource('users', UserController::class);
 
     Route::get('print-ticket', function () {
         $users = User::get();
@@ -42,7 +34,18 @@ Route::middleware('auth')->group(function () {
         return view('ticket', compact('users'));
     })->name('print-ticket');
 
-    Route::resource('users', UserController::class);
+
+});
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::prefix('attendance')->as('attendance.')->group(function () {
+        Route::delete('{attendance}', [AttendanceController::class, 'destroy'])->name('destroy');
+    });
+
     Route::resource('surveys', SurveyController::class);
 
 

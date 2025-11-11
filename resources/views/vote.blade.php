@@ -5,6 +5,7 @@
         </h2>
     </x-slot>
 
+<<<<<<< HEAD
     <div class="py-12">
         <div class="flex flex-col gap-2 mx-auto max-w-7xl sm:px-6 lg:px-8">
             <x-container>
@@ -32,6 +33,29 @@
                                 <tbody>
 
                                     @foreach ($surveys as $survey)
+=======
+    <div x-data="{ surveyName: '', surveyId: '', openVoteModal() { this.$refs.voteModal.showModal(); } }">
+        <div class="py-12">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 flex flex-col gap-2">
+                <x-container>
+                    <div class="flex flex-col gap-6">
+                        <x-survey-tabs />
+                        <div class="flex flex-col gap-2">
+                            <div class="overflow-x-auto">
+                                <table class="table">
+                                    <!-- head -->
+                                    <thead>
+                                        <tr>
+                                            <th>Survey Name</th>
+                                            <th>Description</th>
+                                            <th>Year</th>
+                                            <th>You Voted</th>
+                                            <th class="w-32 text-center">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @forelse ($surveys as $survey)
+>>>>>>> backend
                                         <tr>
                                             <td>{{ $survey->id }}</td>
                                             <td>{{ $survey->name }}</td>

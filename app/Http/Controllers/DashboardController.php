@@ -7,7 +7,7 @@ use App\Models\User;
 
 class DashboardController extends Controller
 {
-    public function dashboard()
+    public function index()
     {
         $attendances = Attendance::with(['user.ticket'])
             ->orderBy('arrival_date', 'asc')

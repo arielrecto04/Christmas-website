@@ -72,7 +72,7 @@ class User extends Authenticatable
     }
     public function is_admin()
     {
-        return $this->roles->pluck('name')->contains('admin');
+        return $this->roles()->where('name', 'admin')->exists();
     }
 
     public function votes()
