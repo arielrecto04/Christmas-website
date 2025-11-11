@@ -10,11 +10,7 @@
             <x-container>
                 <div class="flex flex-col gap-6">
                     <div class="flex flex-row justify-between">
-                        <div class="join">
-                            <a href="{{ route('christmas.survey') }}" class="btn join-item">Surveys</a>
-                            <a href="{{ route('christmas.attendance') }}" class="btn join-item">Attendance</a>
-                            <a href="{{ route('christmas.vote') }}" class="btn join-item">Vote</a>
-                        </div>
+                        <x-survey-tabs />
                         <button class="btn" onclick="add_survey_modal.showModal()">Add Survey</button>
                     </div>
                     <div class="flex flex-col gap-2">

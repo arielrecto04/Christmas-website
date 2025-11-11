@@ -30,7 +30,7 @@
     <div class="min-h-screen bg-gray-100">
 
         @auth
-        @include('layouts.navigation')
+        <x-navigation />
 
         <!-- Page Heading -->
         @isset($header)
