@@ -18,16 +18,14 @@ class CandidateVoteController extends Controller
 
         $surveys = Survey::get();
 
+
         return view('vote', compact('surveys'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create(Request $request)
-    {
-
-    }
+    public function create(Request $request) {}
 
     /**
      * Store a newly created resource in storage.
@@ -36,8 +34,8 @@ class CandidateVoteController extends Controller
     {
         $user = auth()->user();
 
-        if(!$user->attendance) {
-            dump('attendance error');
+        if (!$user->attendance) {
+            // dump('attendance error');
             return back()->with('error', 'You must submit attendance before voting.');
         }
 
@@ -91,5 +89,17 @@ class CandidateVoteController extends Controller
     public function destroy(CandidateVote $candidateVote)
     {
         //
+    }
+
+    public function ranking($surveyId)
+    {
+        $ranking = SurveyCandidate::with(['votes', 'user'])
+            ->where('survey_id', $surveyId)
+            ->get()
+            ->sortByDesc('votes_count');
+
+        return response()->json([
+            'ranking' => $ranking,
+        ]);
     }
 }

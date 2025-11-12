@@ -50,7 +50,7 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('christmas')->name('christmas.')->group(function () {
         Route::get('/survey', [SurveyController::class, 'index'])->name('survey');
-
+        Route::get('/ranking/{survey_id}', [CandidateVoteController::class, 'ranking'])->name('ranking');
         Route::get('/vote', [CandidateVoteController::class, 'index'])->name('vote');
         Route::post('/vote/{candidate_id}', [CandidateVoteController::class, 'store'])->name('vote.store');
 
