@@ -39,7 +39,7 @@ class SurveyController extends Controller
             ]);
         }
 
-        return redirect()->route('christmas.survey')->with(['message' => 'Survey created successfully']);
+        return redirect()->route('christmas.surveys')->with(['message' => 'Survey created successfully']);
     }
 
 
