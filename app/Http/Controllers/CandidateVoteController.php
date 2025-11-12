@@ -94,9 +94,12 @@ class CandidateVoteController extends Controller
     public function ranking($surveyId)
     {
         $ranking = SurveyCandidate::with(['votes', 'user'])
+            ->withCount('votes')
             ->where('survey_id', $surveyId)
-            ->get()
-            ->sortByDesc('votes_count');
+            ->orderBy('votes_count', 'desc')
+            ->get();
+
+
 
         return response()->json([
             'ranking' => $ranking,
