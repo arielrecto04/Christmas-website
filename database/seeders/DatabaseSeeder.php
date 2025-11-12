@@ -83,7 +83,7 @@ class DatabaseSeeder extends Seeder
         $employeeUsers = collect($employees)->map(function ($employeeName) {
             $user = User::create([
                 'name' => $employeeName,
-                'email' => Str::slug($employeeName) . '@gmail.com',
+                'email' => str_replace(' ', '.', strtolower($employeeName)) . '@innovatotec.com',
                 'password' => Hash::make('password'),
             ]);
 

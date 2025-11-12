@@ -20,7 +20,7 @@
                         {{ __('Users') }}
                     </x-nav-link>
                     @endif
-                    <x-nav-link :href="route('christmas.survey')" :active="request()->routeIs('christmas.*')">
+                    <x-nav-link :href="route('christmas.surveys')" :active="request()->routeIs('christmas.*')">
                         {{ __('Survey') }}
                     </x-nav-link>
                 </div>

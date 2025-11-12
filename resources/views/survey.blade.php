@@ -63,23 +63,28 @@
                                                         </g>
                                                     </svg>
                                                 </button>
-                                                <button class="btn">
-                                                    <svg id='Trash_20' width='20' height='20' viewBox='0 0 20 20'
-                                                        xmlns='http://www.w3.org/2000/svg'
-                                                        xmlns:xlink='http://www.w3.org/1999/xlink'>
-                                                        <rect width='20' height='20' stroke='none' fill='#000000'
-                                                            opacity='0' />
+                                                <form method="POST"
+                                                    action="{{ route('surveys.destroy', $survey->id) }}">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn">
+                                                        <svg id='Trash_20' width='20' height='20' viewBox='0 0 20 20'
+                                                            xmlns='http://www.w3.org/2000/svg'
+                                                            xmlns:xlink='http://www.w3.org/1999/xlink'>
+                                                            <rect width='20' height='20' stroke='none' fill='#000000'
+                                                                opacity='0' />
 
 
-                                                        <g transform="matrix(0.8 0 0 0.8 10 10)">
-                                                            <path
-                                                                style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;"
-                                                                transform=" translate(-12, -12)"
-                                                                d="M 10 2 L 9 3 L 4 3 L 4 5 L 20 5 L 20 3 L 15 3 L 14 2 L 10 2 z M 5 7 L 5 20 C 5 21.1 5.9 22 7 22 L 17 22 C 18.1 22 19 21.1 19 20 L 19 7 L 5 7 z M 8 9 L 10 9 L 10 20 L 8 20 L 8 9 z M 14 9 L 16 9 L 16 20 L 14 20 L 14 9 z"
-                                                                stroke-linecap="round" />
-                                                        </g>
-                                                    </svg>
-                                                </button>
+                                                            <g transform="matrix(0.8 0 0 0.8 10 10)">
+                                                                <path
+                                                                    style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;"
+                                                                    transform=" translate(-12, -12)"
+                                                                    d="M 10 2 L 9 3 L 4 3 L 4 5 L 20 5 L 20 3 L 15 3 L 14 2 L 10 2 z M 5 7 L 5 20 C 5 21.1 5.9 22 7 22 L 17 22 C 18.1 22 19 21.1 19 20 L 19 7 L 5 7 z M 8 9 L 10 9 L 10 20 L 8 20 L 8 9 z M 14 9 L 16 9 L 16 20 L 14 20 L 14 9 z"
+                                                                    stroke-linecap="round" />
+                                                            </g>
+                                                        </svg>
+                                                    </button>
+                                                </form>
                                             </div>
                                         </td>
                                     </tr>

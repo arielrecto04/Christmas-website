@@ -18,6 +18,6 @@ class CandidateVote extends Model
 
     public function candidate()
     {
-        return $this->belongsTo(SurveyCandidate::class);
+        return $this->belongsTo(SurveyCandidate::class, 'survey_candidate_id');
     }
 }

@@ -59,7 +59,7 @@ class SurveyController extends Controller
             'description' => $attributes['description'],
         ]);
 
-        return redirect()->route('survey')->with('message', 'Survey updated successfully');
+        return redirect()->route('christmas.surveys')->with('message', 'Survey updated successfully');
     }
 
     public function destroy(string $id)
@@ -70,6 +70,6 @@ class SurveyController extends Controller
             return back()->with('message', 'Survey delete failed');
         }
         
-        return redirect()->route('survey')->with('message', 'Survey deleted successfully');
+        return redirect()->route('christmas.surveys')->with('message', 'Survey deleted successfully');
     }
 }

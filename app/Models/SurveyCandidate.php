@@ -23,6 +23,6 @@ class SurveyCandidate extends Model
 
     public function votes()
     {
-        return $this->hasMany(CandidateVote::class);
+        return $this->hasMany(CandidateVote::class, 'survey_candidate_id');
     }
 }
