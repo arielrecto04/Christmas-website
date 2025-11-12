@@ -12,8 +12,7 @@ class SurveyController extends Controller
 {
     public function index()
     {
-        $surveys = Survey::orderBy('name', 'asc')
-                      ->paginate(10);
+        $surveys = Survey::paginate(10);
         return view('survey', compact('surveys'));
     }
 
@@ -30,6 +29,10 @@ class SurveyController extends Controller
             'is_active' => $request->has('is_active') ? 1 : 0,
             'year' => date('Y'),
         ]);
+
+        if(!$survey) {
+            return back()->with('error', 'Failed to create survey');
+        }
 
         $candidates = User::has('attendance')->get();
 
@@ -54,10 +57,14 @@ class SurveyController extends Controller
             'year' => 'required|digits:4|integer',
         ]);
 
-        $survey->update([
+        $updateSurvey = $survey->update([
             'name' => $attributes['name'],
             'description' => $attributes['description'],
         ]);
+
+        if($updateSurvey) {
+            return back()->with('error', 'Failed to update survey');
+        }
 
         return redirect()->route('christmas.surveys')->with('message', 'Survey updated successfully');
     }
@@ -67,7 +74,7 @@ class SurveyController extends Controller
         $survey = Survey::findOrFail($id);
 
         if(!$survey->delete()) {
-            return back()->with('message', 'Survey delete failed');
+            return back()->with('message', 'Failed to delete survey');
         }
         
         return redirect()->route('christmas.surveys')->with('message', 'Survey deleted successfully');
