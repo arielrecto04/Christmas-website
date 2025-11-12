@@ -13,12 +13,12 @@ use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\CandidateVoteController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return to_route('disco-theme');
 });
 
 Route::get('/disco-theme', function () {
     return view('disco-theme');
-});
+})->name('disco-theme');
 
 
 Route::prefix('attendance')->as('attendance.')->group(function () {
