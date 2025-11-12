@@ -49,10 +49,10 @@ Route::middleware('auth')->group(function () {
     Route::resource('surveys', SurveyController::class);
 
     Route::prefix('christmas')->name('christmas.')->group(function () {
-        Route::get('/survey', [SurveyController::class, 'index'])->name('survey');
+        Route::get('/surveys', [SurveyController::class, 'index'])->name('surveys');
         Route::get('/ranking/{survey_id}', [CandidateVoteController::class, 'ranking'])->name('ranking');
         Route::get('/vote', [CandidateVoteController::class, 'index'])->name('vote');
-        Route::post('/vote/{candidate_id}', [CandidateVoteController::class, 'store'])->name('vote.store');
+        Route::post('/votes/{candidate_id}', [CandidateVoteController::class, 'store'])->name('vote.store');
 
         Route::get('/attendance', [AttendanceController::class, 'index'])->name('attendance');
     });
