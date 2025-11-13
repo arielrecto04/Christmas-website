@@ -71,7 +71,20 @@
                                                         </g>
                                                     </svg>
                                                 </button>
-                                                <dialog id="edit_survey_{{ $survey->id }}_modal" class="modal">
+                                                <dialog id="edit_survey_{{ $survey->id }}_modal" class="modal" x-data="{
+                                                candidates: {{ json_encode($survey->candidates->pluck('user_id')->toArray()) }},
+                                                users: {{ json_encode($users->pluck('id')) }},
+                                                get allSelected() {
+                                                return this.users.length > 0 && this.candidates.length === this.users.length;
+                                                },
+                                                toggleAll() {
+                                                if (this.allSelected) {
+                                                this.candidates = [];
+                                                } else {
+                                                this.candidates = [...this.users];
+                                                }
+                                                }
+                                                }">
                                                     <div class="modal-box max-w-[800px]">
                                                         <h3 class="text-lg font-bold mb-8">Edit Survey</h3>
                                                         <form method="POST"
@@ -99,8 +112,45 @@
                                                                             class="input input-bordered w-full" />
                                                                     </div>
                                                                     <div class="flex flex-col gap-4">
-                                                                        <label
-                                                                            class="label-text font-bold text-lg">Candidates</label>
+                                                                        <label class="label-text font-bold text-lg">
+                                                                            Candidates
+                                                                        </label>
+                                                                        <div class="flex flex-col items-start gap-4 ">
+                                                                            <label
+                                                                                class="input input-bordered flex items-center gap-2 w-full">
+                                                                                <svg class="shrink-0" id='Search_20'
+                                                                                    width='20' height='20'
+                                                                                    viewBox='0 0 20 20'
+                                                                                    xmlns='http://www.w3.org/2000/svg'
+                                                                                    xmlns:xlink='http://www.w3.org/1999/xlink'>
+                                                                                    <rect width='20' height='20'
+                                                                                        stroke='none' fill='#000000'
+                                                                                        opacity='0' />
+
+
+                                                                                    <g
+                                                                                        transform="matrix(0.8 0 0 0.8 10 10)">
+                                                                                        <path
+                                                                                            style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;"
+                                                                                            transform=" translate(-12, -12)"
+                                                                                            d="M 9 2 C 5.1458514 2 2 5.1458514 2 9 C 2 12.854149 5.1458514 16 9 16 C 10.747998 16 12.345009 15.348024 13.574219 14.28125 L 14 14.707031 L 14 16 L 20 22 L 22 20 L 16 14 L 14.707031 14 L 14.28125 13.574219 C 15.348024 12.345009 16 10.747998 16 9 C 16 5.1458514 12.854149 2 9 2 z M 9 4 C 11.773268 4 14 6.2267316 14 9 C 14 11.773268 11.773268 14 9 14 C 6.2267316 14 4 11.773268 4 9 C 4 6.2267316 6.2267316 4 9 4 z"
+                                                                                            stroke-linecap="round" />
+                                                                                    </g>
+                                                                                </svg>
+                                                                                <input type="text"
+                                                                                    class="grow border-none"
+                                                                                    placeholder="Search..." />
+                                                                            </label>
+                                                                            <label class="label cursor-pointer px-0">
+                                                                                <input type="checkbox"
+                                                                                    class="checkbox checkbox-primary"
+                                                                                    :checked="allSelected"
+                                                                                    @change="toggleAll()" />
+                                                                                <span
+                                                                                    class="label-text ml-2 font-bold">Select
+                                                                                    All</span>
+                                                                            </label>
+                                                                        </div>
                                                                         <div
                                                                             class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-1">
                                                                             @foreach ($users as $user)
@@ -108,11 +158,8 @@
                                                                                 <input type="checkbox"
                                                                                     name="candidates[]"
                                                                                     value="{{ $user->id }}"
-                                                                                    @if(in_array($user->id,
-                                                                                $survey->candidates->pluck('user_id')->toArray()))
-                                                                                checked @endif
-                                                                                class="checkbox checkbox-primary"
-                                                                                >
+                                                                                    class="checkbox checkbox-primary"
+                                                                                    x-model="candidates">
                                                                                 <span>{{ $user->name }}</span>
                                                                             </label>
                                                                             @endforeach
@@ -170,7 +217,13 @@
             </x-container>
         </div>
     </div>
-    <dialog id="add_survey_modal" class="modal">
+    <dialog id="add_survey_modal" class="modal" x-data="{
+            selectAll: false,
+            toggleAll() {
+                const checkboxes = document.querySelectorAll('#add_survey_modal input[name=\'candidates[]\']');
+                checkboxes.forEach(cb => cb.checked = this.selectAll);
+            }
+        }">
         <div class="modal-box max-w-[800px]">
             <h3 class="text-lg font-bold mb-8">Add Survey</h3>
             <form method="POST" action="{{ route('survey.store') }}">
@@ -205,6 +258,28 @@
                     </div>
                     <div class="flex flex-col gap-4">
                         <label for="candidates" class="font-bold text-lg">Candidates</label>
+                        <div class="flex flex-col items-start gap-4 ">
+                            <label class="input input-bordered flex items-center gap-2 w-full">
+                                <svg class="shrink-0" id='Search_20' width='20' height='20' viewBox='0 0 20 20'
+                                    xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'>
+                                    <rect width='20' height='20' stroke='none' fill='#000000' opacity='0' />
+
+
+                                    <g transform="matrix(0.8 0 0 0.8 10 10)">
+                                        <path
+                                            style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;"
+                                            transform=" translate(-12, -12)"
+                                            d="M 9 2 C 5.1458514 2 2 5.1458514 2 9 C 2 12.854149 5.1458514 16 9 16 C 10.747998 16 12.345009 15.348024 13.574219 14.28125 L 14 14.707031 L 14 16 L 20 22 L 22 20 L 16 14 L 14.707031 14 L 14.28125 13.574219 C 15.348024 12.345009 16 10.747998 16 9 C 16 5.1458514 12.854149 2 9 2 z M 9 4 C 11.773268 4 14 6.2267316 14 9 C 14 11.773268 11.773268 14 9 14 C 6.2267316 14 4 11.773268 4 9 C 4 6.2267316 6.2267316 4 9 4 z"
+                                            stroke-linecap="round" />
+                                    </g>
+                                </svg>
+                                <input type="text" class="grow border-none" placeholder="Search..." />
+                            </label>
+                            <label class="label cursor-pointer px-0">
+                                <input type="checkbox" class="checkbox " x-model="selectAll" @change="toggleAll()" />
+                                <span class=" label-text ml-2 font-bold">Select All</span>
+                            </label>
+                        </div>
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
                             @foreach ($users as $user)
                             <label class="flex items-center gap-2 cursor-pointer">
