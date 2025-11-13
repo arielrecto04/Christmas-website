@@ -10,7 +10,7 @@ class DashboardController extends Controller
     public function index()
     {
         $attendances = Attendance::with(['user.ticket'])
-            ->orderBy('arrival_date', 'asc')
+            ->orderBy('arrival_date', 'desc')
             ->paginate(10);
 
         $totalAttendees = Attendance::count();

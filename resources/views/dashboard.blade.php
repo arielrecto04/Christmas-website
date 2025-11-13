@@ -42,7 +42,7 @@
                                     <th></th>
                                     <td>{{ $attendance->user->name }}</td>
                                     <td>{{ $attendance->user->ticket->ticket_number }}</td>
-                                    <td>{{ date('F d, Y h:s A', strtotime($attendance->arrival_date)) }}
+                                    <td>{{ $attendance->arrival_date }}
                                     </td>
                                     <td class="flex items-center gap-2">
 
