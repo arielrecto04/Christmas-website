@@ -35,7 +35,6 @@ class CandidateVoteController extends Controller
         $user = auth()->user();
 
         if (!$user->attendance) {
-            // dump('attendance error');
             return back()->with('error', 'You must submit attendance before voting.');
         }
 

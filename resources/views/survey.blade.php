@@ -29,9 +29,22 @@
                                     <tr>
                                         <td>{{ $survey->name }}</td>
                                         <td>{{ $survey->description }}</td>
-                                        <td class="text-center">
-                                            <input type="checkbox" class="toggle" {{ $survey->is_active ? 'checked' :
-                                            ''}}/>
+                                        <td 
+                                            class="text-center" 
+                                            x-data="toggleActiveSurvey({{ $survey->id }}, 
+                                            {{ $survey->is_active ? '
+                                            true' 
+                                            : 
+                                            'false' 
+                                            }})"
+                                        >
+                                            <input 
+                                                type="checkbox" 
+                                                x-model="is_active"
+                                                @change="toggle()" 
+                                                class="toggle" {{ $survey->is_active ? 'checked' :
+                                            ''}}
+                                            />
                                         </td>
                                         <td>
                                             <div class="flex flex-row justify-center gap-2">
@@ -173,6 +186,27 @@
     </dialog>
 
     @push('js')
+    <script>
+
+        const toggleActiveSurvey = (id, currentState) => ({
+            is_active:currentState,
+
+            async toggle() {
+                axios.post(`/survey/${id}/toggle`, {
+                    is_active: this.is_active
+                })
+                .then(response => {
+                    console.log('Survey toggled successfully:', response.data);
+                })
+                .catch(error => {
+                    console.error('Survey toggled error', error);
+                })
+            }
+
+
+        })
+
+    </script>
 
     @endpush
 </x-app-layout>

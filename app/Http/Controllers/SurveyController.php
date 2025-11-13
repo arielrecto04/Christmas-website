@@ -79,4 +79,18 @@ class SurveyController extends Controller
         
         return redirect()->route('christmas.surveys')->with('message', 'Survey deleted successfully');
     }
+
+    public function toggleActive($id)
+    {
+        $survey = Survey::findOrFail($id);
+
+        $survey->update([
+            'is_active' => !$survey->is_active,
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'is_active' => $survey->is_active,
+        ]);
+    }
 }

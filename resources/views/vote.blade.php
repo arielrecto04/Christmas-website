@@ -60,7 +60,8 @@
                                                 <td>
                                                     <div class="flex gap-2 justify-center">
                                                         @if ($hasVoted)
-                                                            <button class="btn"
+                                                            <button
+                                                                class="btn"
                                                                 onclick="ranking_modal_{{ $survey->id }}.showModal()">View
                                                                 Ranking</button>
 
@@ -228,9 +229,11 @@
                                                                 Already Voted
                                                             </button>
                                                         @else
-                                                            <button class="btn"
+                                                            <button 
+                                                                {{ !$survey->is_active ? 'disabled' : '' }}
+                                                                class="btn"
                                                                 onclick="vote_modal_{{ $survey->id }}.showModal()">
-                                                                Vote
+                                                                {{ !$survey->is_active ? 'Not Active' : 'Vote' }}
                                                             </button>
                                                         @endif
 
