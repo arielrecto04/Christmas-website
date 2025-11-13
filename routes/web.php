@@ -58,7 +58,8 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::post('/survey', [SurveyController::class, 'store'])->name('survey.store');
-    Route::post('/survey/{id}/toggle', [SurveyController::class,'toggleActive'])->name('survey.toggle');
+    Route::put('/survey/{survey_id}', [SurveyController::class,'update'])->name('survey.update');
+    Route::post('/survey/{survey_id}/toggle', [SurveyController::class,'toggleActive'])->name('survey.toggle');
 
 });
 

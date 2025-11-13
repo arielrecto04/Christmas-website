@@ -53,8 +53,6 @@ class SurveyController extends Controller
         $attributes = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'is_active' => 'sometimes|boolean',
-            'year' => 'required|digits:4|integer',
         ]);
 
         $updateSurvey = $survey->update([
@@ -62,7 +60,7 @@ class SurveyController extends Controller
             'description' => $attributes['description'],
         ]);
 
-        if($updateSurvey) {
+        if(!$updateSurvey) {
             return back()->with('error', 'Failed to update survey');
         }
 
