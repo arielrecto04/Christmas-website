@@ -54,6 +54,8 @@ class SurveyController extends Controller
         $attributes = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
+            'candidates' => 'array|array',
+            'candidates.*' => 'exists:users,id'
         ]);
 
         $updateSurvey = $survey->update([
@@ -63,6 +65,16 @@ class SurveyController extends Controller
 
         if(!$updateSurvey) {
             return back()->with('error', 'Failed to update survey');
+        }
+
+        $survey->candidates()->delete();
+
+        if(!empty($attributes['candidates'])) {
+            foreach ($attributes['candidates'] as $candidate) { 
+                $survey->candidates()->create([
+                    'user_id' => $candidate,
+                ]);
+            }
         }
 
         return redirect()->route('christmas.surveys')->with('message', 'Survey updated successfully');

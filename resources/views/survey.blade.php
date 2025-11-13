@@ -105,7 +105,23 @@
                                                                         class="input input-bordered w-full" 
                                                                     />
                                                                 </div>
-                                                            </div>
+                                                                <div class="flex flex-col gap-2">
+                                                                    <label class="label-text font-semibold">Candidates</label>
+                                                                    <div class="grid grid-cols-2 gap-1">
+                                                                        @foreach ($users as $user)
+                                                                            <label class="flex items-center gap-2">
+                                                                                <input 
+                                                                                    type="checkbox" 
+                                                                                    name="candidates[]" 
+                                                                                    value="{{ $user->id }}"
+                                                                                    @if(in_array($user->id, $survey->candidates->pluck('user_id')->toArray())) checked @endif
+                                                                                    class="checkbox checkbox-primary"
+                                                                                >
+                                                                                <span>{{ $user->name }}</span>
+                                                                            </label>
+                                                                        @endforeach
+                                                                    </div>
+                                                                </div>
                                                             <div class="modal-action">
                                                                 <button type="button" class="btn" onClick="edit_survey_{{ $survey->id }}_modal.close()">Close</button>
                                                                 <button type="submit" class="btn btn-primary">Submit</button>
