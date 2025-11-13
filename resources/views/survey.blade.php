@@ -9,7 +9,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 flex flex-col gap-2">
             <x-container>
                 <div class="flex flex-col gap-6">
-                    <div class="flex flex-row justify-between">
+                    <div class="flex flex-col sm:flex-row justify-between gap-4 items-start">
                         <x-survey-tabs />
                         <button class="btn" onclick="add_survey_modal.showModal()">Add Survey</button>
                     </div>
@@ -29,26 +29,21 @@
                                     <tr>
                                         <td>{{ $survey->name }}</td>
                                         <td>{{ $survey->description }}</td>
-                                        <td 
-                                            class="text-center" 
-                                            x-data="toggleActiveSurvey({{ $survey->id }}, 
+                                        <td class="text-center" x-data="toggleActiveSurvey({{ $survey->id }}, 
                                             {{ $survey->is_active ? '
                                             true' 
                                             : 
                                             'false' 
-                                            }})"
-                                        >
-                                            <input 
-                                                type="checkbox" 
-                                                x-model="is_active"
-                                                @change="toggle()" 
-                                                class="toggle" {{ $survey->is_active ? 'checked' :
+                                            }})">
+                                            <input type="checkbox" x-model="is_active" @change="toggle()" class="toggle"
+                                                {{ $survey->is_active ? 'checked' :
                                             ''}}
                                             />
                                         </td>
                                         <td>
                                             <div class="flex flex-row justify-center gap-2">
-                                                <button class="btn" onclick="edit_survey_{{ $survey->id }}_modal.showModal()">
+                                                <button class="btn"
+                                                    onclick="edit_survey_{{ $survey->id }}_modal.showModal()">
                                                     <svg id='Edit_Write_2_20' width='20' height='20' viewBox='0 0 20 20'
                                                         xmlns='http://www.w3.org/2000/svg'
                                                         xmlns:xlink='http://www.w3.org/1999/xlink'>
@@ -77,54 +72,59 @@
                                                     </svg>
                                                 </button>
                                                 <dialog id="edit_survey_{{ $survey->id }}_modal" class="modal">
-                                                    <div class="modal-box">
+                                                    <div class="modal-box max-w-[800px]">
                                                         <h3 class="text-lg font-bold mb-8">Edit Survey</h3>
-                                                        <form method="POST" action="{{ route('survey.update', ['survey_id' => $survey->id]) }}">
+                                                        <form method="POST"
+                                                            action="{{ route('survey.update', ['survey_id' => $survey->id]) }}">
                                                             @csrf
                                                             @method('PUT')
-                                                            <div class="flex flex-col gap-6">
-                                                                <div class="flex flex-col gap-2">
-                                                                    <label for="survey-name" class="label-text font-semibold">Name</label>
-                                                                    <input 
-                                                                        type="text" 
-                                                                        name="name" 
-                                                                        placeholder="Enter survey name" 
-                                                                        id="survey-name"
-                                                                        value="{{ $survey->name }}"
-                                                                        class="input input-bordered w-full" 
-                                                                    />
-                                                                </div>
-                                                                <div class="flex flex-col gap-2">
-                                                                    <label for="description" class="label-text font-semibold">Description</label>
-                                                                    <input 
-                                                                        type="text" 
-                                                                        name="description" 
-                                                                        placeholder="Enter survey description" 
-                                                                        value="{{ $survey->description }}"
-                                                                        id="description"
-                                                                        class="input input-bordered w-full" 
-                                                                    />
-                                                                </div>
-                                                                <div class="flex flex-col gap-2">
-                                                                    <label class="label-text font-semibold">Candidates</label>
-                                                                    <div class="grid grid-cols-2 gap-1">
-                                                                        @foreach ($users as $user)
+                                                            <div class="flex flex-col gap-4">
+                                                                <h3 class="font-bold text-lg">Survey</h3>
+                                                                <div class="flex flex-col gap-6">
+                                                                    <div class="flex flex-col gap-2">
+                                                                        <label for="survey-name"
+                                                                            class="label-text font-semibold">Name</label>
+                                                                        <input type="text" name="name"
+                                                                            placeholder="Enter survey name"
+                                                                            id="survey-name" value="{{ $survey->name }}"
+                                                                            class="input input-bordered w-full" />
+                                                                    </div>
+                                                                    <div class="flex flex-col gap-2">
+                                                                        <label for="description"
+                                                                            class="label-text font-semibold">Description</label>
+                                                                        <input type="text" name="description"
+                                                                            placeholder="Enter survey description"
+                                                                            value="{{ $survey->description }}"
+                                                                            id="description"
+                                                                            class="input input-bordered w-full" />
+                                                                    </div>
+                                                                    <div class="flex flex-col gap-4">
+                                                                        <label
+                                                                            class="label-text font-bold text-lg">Candidates</label>
+                                                                        <div
+                                                                            class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-1">
+                                                                            @foreach ($users as $user)
                                                                             <label class="flex items-center gap-2">
-                                                                                <input 
-                                                                                    type="checkbox" 
-                                                                                    name="candidates[]" 
+                                                                                <input type="checkbox"
+                                                                                    name="candidates[]"
                                                                                     value="{{ $user->id }}"
-                                                                                    @if(in_array($user->id, $survey->candidates->pluck('user_id')->toArray())) checked @endif
-                                                                                    class="checkbox checkbox-primary"
+                                                                                    @if(in_array($user->id,
+                                                                                $survey->candidates->pluck('user_id')->toArray()))
+                                                                                checked @endif
+                                                                                class="checkbox checkbox-primary"
                                                                                 >
                                                                                 <span>{{ $user->name }}</span>
                                                                             </label>
-                                                                        @endforeach
+                                                                            @endforeach
+                                                                        </div>
                                                                     </div>
                                                                 </div>
+                                                            </div>
                                                             <div class="modal-action">
-                                                                <button type="button" class="btn" onClick="edit_survey_{{ $survey->id }}_modal.close()">Close</button>
-                                                                <button type="submit" class="btn btn-primary">Submit</button>
+                                                                <button type="button" class="btn"
+                                                                    onClick="edit_survey_{{ $survey->id }}_modal.close()">Close</button>
+                                                                <button type="submit"
+                                                                    class="btn btn-primary">Submit</button>
                                                             </div>
                                                         </form>
                                                     </div>
@@ -171,7 +171,7 @@
         </div>
     </div>
     <dialog id="add_survey_modal" class="modal">
-        <div class="modal-box">
+        <div class="modal-box max-w-[800px]">
             <h3 class="text-lg font-bold mb-8">Add Survey</h3>
             <form method="POST" action="{{ route('survey.store') }}">
                 @csrf
@@ -185,8 +185,8 @@
                     </ul>
                 </div>
                 @endif
-                <div class="flex flex-col gap-6">
-                    <h3>Survey</h3>
+                <div class="flex flex-col gap-4">
+                    <h3 class="font-bold text-lg">Survey</h3>
                     <div class="flex flex-col gap-2">
                         <label for="survey-name" class="label-text font-semibold">Name</label>
                         <input type="text" name="name" placeholder="Enter survey name" id="survey-name"
@@ -203,14 +203,14 @@
                             <span class="label-text">Active</span>
                         </label>
                     </div>
-                    <div class="flex flex-col gap-2">
-                        <label for="candidates">Candidates</label>
-                        <div class="grid grid-cols-2 gap-2">
+                    <div class="flex flex-col gap-4">
+                        <label for="candidates" class="font-bold text-lg">Candidates</label>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
                             @foreach ($users as $user)
-                                <label class="flex items-center gap-2 cursor-pointer">
-                                    <input type="checkbox" name="candidates[]" value="{{ $user->id }}" class="checkbox">
-                                    <span>{{ $user->name }}</span>
-                                </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" name="candidates[]" value="{{ $user->id }}" class="checkbox">
+                                <span>{{ $user->name }}</span>
+                            </label>
                             @endforeach
                         </div>
                     </div>
@@ -227,7 +227,6 @@
 
     @push('js')
     <script>
-
         const toggleActiveSurvey = (id, currentState) => ({
             is_active:currentState,
 
