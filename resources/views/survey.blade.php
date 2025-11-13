@@ -35,7 +35,7 @@
                                         </td>
                                         <td>
                                             <div class="flex flex-row justify-center gap-2">
-                                                <button class="btn">
+                                                <button class="btn" onclick="edit_survey_modal.showModal()">
                                                     <svg id='Edit_Write_2_20' width='20' height='20' viewBox='0 0 20 20'
                                                         xmlns='http://www.w3.org/2000/svg'
                                                         xmlns:xlink='http://www.w3.org/1999/xlink'>
@@ -104,7 +104,7 @@
             </x-container>
         </div>
     </div>
-    <dialog x-data id="add_survey_modal" x-ref="addSurveyModal" class="modal">
+    <dialog id="add_survey_modal" class="modal">
         <div class="modal-box">
             <h3 class="text-lg font-bold mb-8">Add Survey</h3>
             <form method="POST" action="{{ route('survey.store') }}">
@@ -120,6 +120,7 @@
                 </div>
                 @endif
                 <div class="flex flex-col gap-6">
+                    <h3>Survey</h3>
                     <div class="flex flex-col gap-2">
                         <label for="survey-name" class="label-text font-semibold">Name</label>
                         <input type="text" name="name" placeholder="Enter survey name" id="survey-name"
@@ -138,10 +139,40 @@
                     </div>
                 </div>
                 <div class="modal-action">
-                    <button type="button" class="btn" @click="$refs.addSurveyModal.close()">Close</button>
+                    <button type="button" class="btn" onClick="add_survey_modal.close()">Close</button>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
             </form>
         </div>
     </dialog>
+
+    <dialog id="edit_survey_modal" class="modal">
+        <div class="modal-box">
+            <h3 class="text-lg font-bold mb-8">Edit Survey</h3>
+            <form method="POST" action="">
+                @csrf
+                @method('PUT')
+                <div class="flex flex-col gap-6">
+                    <div class="flex flex-col gap-2">
+                        <label for="survey-name" class="label-text font-semibold">Name</label>
+                        <input type="text" name="name" placeholder="Enter survey name" id="survey-name"
+                            class="input input-bordered w-full" />
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <label for="description" class="label-text font-semibold">Description</label>
+                        <input type="text" name="description" placeholder="Enter survey description" id="description"
+                            class="input input-bordered w-full" />
+                    </div>
+                </div>
+                <div class="modal-action">
+                    <button type="button" class="btn" onClick="edit_survey_modal.close()">Close</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </dialog>
+
+    @push('js')
+
+    @endpush
 </x-app-layout>
