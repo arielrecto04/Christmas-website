@@ -13,7 +13,8 @@ class SurveyController extends Controller
     public function index()
     {
         $surveys = Survey::paginate(10);
-        return view('survey', compact('surveys'));
+        $users = User::get();
+        return view('survey', compact('surveys', 'users'));
     }
 
     public function store(Request $request)
@@ -21,6 +22,8 @@ class SurveyController extends Controller
         $attribute = $request->validate([
             'name' => 'required',
             'description' => 'nullable',
+            'candidates' => 'array|array',
+            'candidates.*' => 'exists:users,id'
         ]);
 
         $survey = Survey::create([
@@ -34,11 +37,9 @@ class SurveyController extends Controller
             return back()->with('error', 'Failed to create survey');
         }
 
-        $candidates = User::has('attendance')->get();
-
-        foreach ($candidates as $candidate) {
+        foreach ($request->candidates as $candidate) {
             $survey->candidates()->create([
-                'user_id' => $candidate->id,
+                'user_id' => $candidate,
             ]);
         }
 

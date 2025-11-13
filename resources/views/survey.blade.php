@@ -187,6 +187,17 @@
                             <span class="label-text">Active</span>
                         </label>
                     </div>
+                    <div class="flex flex-col gap-2">
+                        <label for="candidates">Candidates</label>
+                        <div class="grid grid-cols-2 gap-2">
+                            @foreach ($users as $user)
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="checkbox" name="candidates[]" value="{{ $user->id }}" class="checkbox">
+                                    <span>{{ $user->name }}</span>
+                                </label>
+                            @endforeach
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-action">
                     <button type="button" class="btn" onClick="add_survey_modal.close()">Close</button>

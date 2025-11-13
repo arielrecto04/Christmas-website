@@ -257,7 +257,7 @@
                                                                             <h1>{{ $candidate->user->name }}</h1>
 
                                                                             <p class="font-bold">#
-                                                                                {{ $candidate->id }}
+                                                                                {{ $candidate->user->id }}
                                                                             </p>
 
 
