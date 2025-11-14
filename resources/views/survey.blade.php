@@ -116,7 +116,7 @@
                                                                             Candidates
                                                                         </label>
                                                                         <div class="flex flex-col items-start gap-4 ">
-                                                                            <label
+                                                                            {{-- <label
                                                                                 class="input input-bordered flex items-center gap-2 w-full">
                                                                                 <svg class="shrink-0" id='Search_20'
                                                                                     width='20' height='20'
@@ -140,7 +140,7 @@
                                                                                 <input type="text"
                                                                                     class="grow border-none"
                                                                                     placeholder="Search..." />
-                                                                            </label>
+                                                                            </label> --}}
                                                                             <label class="label cursor-pointer px-0">
                                                                                 <input type="checkbox"
                                                                                     class="checkbox checkbox-primary"
@@ -259,7 +259,7 @@
                     <div class="flex flex-col gap-4">
                         <label for="candidates" class="font-bold text-lg">Candidates</label>
                         <div class="flex flex-col items-start gap-4 ">
-                            <label class="input input-bordered flex items-center gap-2 w-full">
+                            {{-- <label class="input input-bordered flex items-center gap-2 w-full">
                                 <svg class="shrink-0" id='Search_20' width='20' height='20' viewBox='0 0 20 20'
                                     xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'>
                                     <rect width='20' height='20' stroke='none' fill='#000000' opacity='0' />
@@ -274,7 +274,7 @@
                                     </g>
                                 </svg>
                                 <input type="text" class="grow border-none" placeholder="Search..." />
-                            </label>
+                            </label> --}}
                             <label class="label cursor-pointer px-0">
                                 <input type="checkbox" class="checkbox " x-model="selectAll" @change="toggleAll()" />
                                 <span class=" label-text ml-2 font-bold">Select All</span>
