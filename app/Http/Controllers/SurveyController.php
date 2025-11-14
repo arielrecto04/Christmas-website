@@ -22,8 +22,8 @@ class SurveyController extends Controller
         $attribute = $request->validate([
             'name' => 'required',
             'description' => 'nullable',
-            'candidates' => 'array|array',
-            'candidates.*' => 'exists:users,id'
+            'candidates' => 'array|array|required',
+            'candidates.*' => 'exists:users,id|required'
         ]);
 
         $survey = Survey::create([
@@ -54,8 +54,8 @@ class SurveyController extends Controller
         $attributes = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'candidates' => 'array|array',
-            'candidates.*' => 'exists:users,id'
+            'candidates' => 'array|array|required',
+            'candidates.*' => 'exists:users,id|required'
         ]);
 
         $updateSurvey = $survey->update([
