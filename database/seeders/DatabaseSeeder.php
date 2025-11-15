@@ -81,7 +81,8 @@ class DatabaseSeeder extends Seeder
             ["id_number" => "123", "email" => "fraziermhonperez@gardenia.com.ph"],
             ["id_number" => "124", "email" => "vash.ancheta@innovatotec.com"],
             ['id_number' => 'password', 'email' => 'alethea.teope@gmail.com'],
-            ['id_number' => 'password', 'email' => 'cpinero522003@gmail.com']
+            ['id_number' => 'password', 'email' => 'cpinero522003@gmail.com'],
+            ['id_number' => '125', 'email' => 'marvin.estremadura@innovatotec.com']
         ];
 
 
