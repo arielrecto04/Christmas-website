@@ -102,32 +102,8 @@ class DatabaseSeeder extends Seeder
 
             $user->roles()->attach(Role::where('name', 'employee')->first()->id);
             $user->ticket()->create(['ticket_number' => Ticket::generateTicketNumber()]);
-            $user->attendance()->create(['arrival_date' => Carbon::now()]);
 
             return $user; // collect all created users
         });
-
-        // Create Survey
-        $survey = Survey::create([
-            'name' => 'Best Outfit',
-            'year' => Carbon::now()->year,
-        ]);
-
-        // Add admin as candidate
-        $candidateAdmin = $survey->candidates()->create([
-            'user_id' => $admin->id,
-        ]);
-
-        // Add all employee users as candidates
-        $employeeUsers->each(function ($user) use ($survey) {
-            $survey->candidates()->create(['user_id' => $user->id]);
-        });
-
-        // Give one example vote from first employee
-        if ($employeeUsers->isNotEmpty()) {
-            $employeeUsers->first()->votes()->create([
-                'survey_candidate_id' => $candidateAdmin->id,
-            ]);
-        }
     }
 }
